@@ -9,6 +9,7 @@
 
 void initSolarFox() __attribute__((constructor));
 void closeSolarFox() __attribute__((constructor));
+extern "C" int entryPoint(void *dynamicLib);
 
 void initSolarFox()
 {
@@ -18,4 +19,10 @@ void initSolarFox()
 void closeSolarFox()
 {
     printf("[libSolarFox] SolarFox closing.\n");
+}
+
+extern "C" int entryPoint(void *dynamicLib)
+{
+    printf("[libSolarFox] entry point !\n");
+    return 0;
 }

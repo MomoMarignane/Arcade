@@ -9,7 +9,7 @@
 
 void initPacman() __attribute__((constructor));
 void closePacman() __attribute__((destructor));
-extern "C" int entryPoint(void *pacman);
+extern "C" int entryPoint(void *dynamicLib);
 
 void initPacman()
 {
@@ -21,7 +21,7 @@ void closePacman()
     printf("[libPacman] Pacman closing.\n");
 }
 
-extern "C" int entryPoint(void *pacman)
+extern "C" int entryPoint(void *dynamicLib)
 {
     printf("[libPacman] entry point !\n");
     return 0;
