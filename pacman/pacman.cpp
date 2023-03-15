@@ -5,10 +5,11 @@
 ** lib.c
 */
 
-#include <stdio.h>
+#include "pacman.hpp"
 
 void initPacman() __attribute__((constructor));
 void closePacman() __attribute__((destructor));
+extern "C" int entryPoint(void *pacman);
 
 void initPacman()
 {
@@ -18,4 +19,10 @@ void initPacman()
 void closePacman()
 {
     printf("[libPacman] Pacman closing.\n");
+}
+
+extern "C" int entryPoint(void *pacman)
+{
+    printf("[libPacman] entry point !\n");
+    return 0;
 }

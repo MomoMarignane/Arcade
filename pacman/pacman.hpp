@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <stdio.h>
+#include <dlfcn.h>
+
 extern "C" {
     void initPacman();
     void closePacman();

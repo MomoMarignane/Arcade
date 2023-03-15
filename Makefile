@@ -7,20 +7,17 @@
 
 SRC	=	arcade.cpp
 
-SRCC	=	pacman/pacman.c	\
-			qix/qix.c	\
-			solarFox/solarFox.c
-
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	arcade
 
 all	:	$(NAME)	$(SRC)
 $(NAME)	:	$(OBJ)
-	gcc	-c	-fPIC	$(SRCC)
-	gcc	-shared	-o	lib.so	$(OBJ)
+	g++	-shared	-fPIC	pacman/pacman.cpp	-o	pacman.so
+	g++	-shared	-fPIC	qix/qix.cpp	-o	qix.so
+	g++	-shared	-fPIC	solarFox/solarFox.cpp	-o	solarFox.so
 	gcc	-c	$(SRC)
-	g++	-o	$(NAME)	*.o	-L.	lib.so
+	g++	-o	$(NAME)	*.o	-L.
 
 clean	:
 	rm	-f	*.o
