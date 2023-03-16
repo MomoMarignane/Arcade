@@ -5,7 +5,7 @@
 ** lib.c
 */
 
-#include "pacman.hpp"
+#include <stdio.h>
 
 void initPacman() __attribute__((constructor));
 void closePacman() __attribute__((destructor));
@@ -26,3 +26,4 @@ extern "C" int entryPoint(void *dynamicLib)
     printf("[libPacman] entry point !\n");
     return 0;
 }
+

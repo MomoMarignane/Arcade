@@ -6,8 +6,20 @@
 */
 
 #pragma once
+#include "../../Core/include/Core.hpp"
 
 extern "C" {
     void initQix();
     void closeQix();
+}
+
+class qix : public Core
+{
+    public:
+        qix();
+        ~qix();
+}
+
+extern "C" qix* createqix() {
+    return new qix();
 }
