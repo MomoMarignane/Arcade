@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <dlfcn.h>
 
-#include "../Game/include/IGameModule.hpp"
-#include "../Graphical/include/IDisplayModule.hpp"
+#include "../../Game/include/IGameModule.hpp"
+#include "../../Graphical/include/IDisplayModule.hpp"
 
 class Core : public IGameModule, public IDisplayModule
 {
