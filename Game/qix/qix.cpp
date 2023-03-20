@@ -6,11 +6,11 @@
 */
 
 #include <stdio.h>
-
+#include "qix.hpp"
 
 void initQix() __attribute__((constructor));
 void closeQix() __attribute__((destructor));
-extern "C" int entryPoint(void *dynamicLib);
+extern "C" IGameModule *entryPoint();
 
 void initQix()
 {
@@ -22,7 +22,7 @@ void closeQix()
     printf("[libQIX] QIX closing.\n");
 }
 
-extern "C" int entryPoint(void *dynamicLib)
+extern "C" IGameModule *entryPoint()
 {
     printf("[libQIX] entry point !\n");
     return 0;

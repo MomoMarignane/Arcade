@@ -18,8 +18,4 @@ class solarFox : public Core
     public:
         solarFox();
         ~solarFox();
-}
-
-extern "C" solarFox* createsolarFox() {
-    return new solarFox();
-}
+};

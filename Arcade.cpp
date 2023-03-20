@@ -6,10 +6,9 @@
 */
 
 #include "Core/include/Core.hpp"
+#include "Game/pacman/pacman.hpp"
 
-
-
-typedef void (*func_t)();
+typedef IGameModule *(*func_t)();
 
 int initDynamicLib(void *dynamicLib)
 {

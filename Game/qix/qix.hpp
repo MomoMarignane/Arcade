@@ -18,8 +18,4 @@ class qix : public Core
     public:
         qix();
         ~qix();
-}
-
-extern "C" qix* createqix() {
-    return new qix();
-}
+};

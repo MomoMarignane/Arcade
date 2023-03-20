@@ -17,11 +17,27 @@ extern "C" {
     void closePacman();
 }
 
-class pacman : public Core
+class pacman : public IGameModule
 {
     public:
-        pacman();
-        ~pacman();
+        pacman() {
+            _life = 3;
+            _score = 0;
+            for (int i = 0; i < 5; i += 1)
+                _lifeMob.push_back(2);
+            playerPos player;
+            player.xPos = 0;
+        };
+        ~pacman() {};
+        void init() override {}
+
+        void stop() override {}
+
+        const std::string& getName() const override {
+            static const std::string name = "Pacman";
+            return name;
+        }
+
         void *goUp();
         void *goDown();
         void *goLeft();
@@ -43,17 +59,3 @@ class pacman : public Core
         std::vector<int> _map2;
         std::vector<int> _map3;
 };
-
-pacman::pacman()
-{
-    _life = 3;
-    _score = 0;
-    for (int i = 0; i < 5; i += 1)
-        _lifeMob.push_back(2);
-    playerPos player;
-    player.xPos = 0;
-}
-
-extern "C" pacman* createpacman() {
-    return new pacman();
-}
