@@ -13,9 +13,19 @@ extern "C" {
     void closeQix();
 }
 
-class qix : public Core
+class qix : public IGameModule
 {
     public:
-        qix();
-        ~qix();
+        qix() {};
+        ~qix() {};
+        void init() override {
+            printf("_________\nQIX\n_______\n");
+        }
+
+        void stop() override {}
+
+        const std::string& getName() const override {
+            static const std::string name = "Pacman";
+            return name;
+        }
 };

@@ -29,7 +29,9 @@ class pacman : public IGameModule
             player.xPos = 0;
         };
         ~pacman() {};
-        void init() override {}
+        void init() override {
+            printf("_________\nPACMAN\n________\n");
+        }
 
         void stop() override {}
 
@@ -37,7 +39,7 @@ class pacman : public IGameModule
             static const std::string name = "Pacman";
             return name;
         }
-
+    protected:
         void *goUp();
         void *goDown();
         void *goLeft();
@@ -45,8 +47,6 @@ class pacman : public IGameModule
         int lostLife();
         int resetLife();
         int upScore();
-
-    private:
         struct playerPos
         {
             int xPos;
