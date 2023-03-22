@@ -15,9 +15,9 @@ NAME	=	arcade
 
 all	:	$(NAME)	$(SRC)
 $(NAME)	:	$(OBJ)
-	g++	$(CXX)	-shared	-fPIC	game/pacman/pacman.cpp	-o	pacman.so
-	g++	$(CXX)	-shared	-fPIC	game/qix/qix.cpp	-o	qix.so
-	g++	$(CXX)	-shared	-fPIC	game/solarFox/solarFox.cpp	-o	solarFox.so
+	g++	$(CXX)	-shared	-fPIC	Game/pacman/pacman.cpp	-o	pacman.so
+	g++	$(CXX)	-shared	-fPIC	Game/qix/qix.cpp	-o	qix.so
+	g++	$(CXX)	-shared	-fPIC	Game/solarFox/solarFox.cpp	-o	solarFox.so
 	gcc	$(CXX)	-c	$(SRC)
 	g++	-o	$(NAME)	*.o	-L.
 	mv	*.so	lib
