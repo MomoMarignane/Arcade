@@ -6,8 +6,8 @@
 */
 
 #include "Core/include/Core.hpp"
-#include "Game/pacman/pacman.hpp"
-#include "Game/qix/qix.hpp"
+#include "Game/snake/snake.hpp"
+#include "Game/nibbler/nibbler.hpp"
 #include "Game/solarFox/solarFox.hpp"
 
 typedef IGameModule *(*func_t)();
@@ -32,15 +32,11 @@ int initDynamicLib(void *dynamicLib, char *src)
         return 0;
     }
     initpcm();
-    pacman pac_;
-    qix qix_;
-    solarFox solarFox_;
-    if (myStrCmp(src, "./lib/pacman.so") == 0)
-        pac_.init();
-    if (myStrCmp(src, "./lib/qix.so") == 0)
-        qix_.init();
-    if (myStrCmp(src, "./lib/solarFox.so") == 0)
-        solarFox_.init();
+    snake name_;
+    nibbler nib_;
+    if (myStrCmp(src, "./lib/nibbler.so") == 0)
+        nib_.init();
+
     dlclose(dynamicLib);
     return 0;
 }

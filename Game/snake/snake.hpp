@@ -13,40 +13,39 @@
 #include "../../Core/include/Core.hpp"
 
 extern "C" {
-    void initPacman();
-    void closePacman();
+    void initSnake();
+    void closeSnake();
 }
 
-class pacman : public IGameModule
+class snake : public IGameModule
 {
     public:
-        pacman() {
+        snake() {};
+        ~snake() {};
+        void init() override {
             _life = 3;
             _score = 0;
             for (int i = 0; i < 5; i += 1)
                 _lifeMob.push_back(2);
             playerPos player;
             player.xPos = 0;
-        };
-        ~pacman() {};
-        void init() override {
-            printf("_________\nPACMAN\n________\n");
+            printf("initied\nSNAKE\n____________\n");
         }
-
-        void stop() override {}
-
+        void stop() override {
+            exit(0);
+        }
         const std::string& getName() const override {
-            static const std::string name = "Pacman";
+            static const std::string name = "Snake";
             return name;
         }
+        void goUp();
+        void goDown();
+        void goLeft();
+        void goRight();
+        void lostLife();
+        void resetLife();
+        void upScore();
     protected:
-        void *goUp();
-        void *goDown();
-        void *goLeft();
-        void *goRight();
-        int lostLife();
-        int resetLife();
-        int upScore();
         struct playerPos
         {
             int xPos;

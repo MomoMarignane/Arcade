@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
-** qix.hpp
+** nibbler.hpp
 */
 
 #pragma once
@@ -13,13 +13,13 @@ extern "C" {
     void closeQix();
 }
 
-class qix : public IGameModule
+class nibbler : public IGameModule
 {
     public:
-        qix() {};
-        ~qix() {};
+        nibbler() {};
+        ~nibbler() {};
         void init() override {
-            printf("_________\nQIX\n_______\n");
+            printf("_________\nNIBBLER\n_______\n");
         }
 
         void stop() override {}
