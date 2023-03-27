@@ -11,12 +11,15 @@
 class sdl2 : public IDisplayModule
 {
     public:
-        sdl2();
-        ~sdl2();
-        void init() override {};
+        sdl2() {};
+        ~sdl2() {};
+        void init() override {
+            printf("SDL2 initied!\n");
+        };
         void stop() override {};
         const std::string& getName() const override {
-            return "sdl2";
+            static const std::string name = "sdl2";
+            return name;
         };
-        void gameOver() override {};
+        bool gameOver() override {};
 };

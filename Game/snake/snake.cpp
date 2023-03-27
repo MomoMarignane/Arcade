@@ -12,7 +12,6 @@ void initSnake() __attribute__((constructor));
 void closeSnake() __attribute__((destructor));
 extern "C" IGameModule *entryPoint();
 
-
 void initSnake()
 {
     printf("[libSnake] Loading Snake library...\n");
@@ -26,7 +25,7 @@ void closeSnake()
 extern "C" IGameModule *entryPoint()
 {
     printf("[libSnake] entry point !\n");
-    return 0;
+    return new snake();
 }
 
 void snake::lostLife()

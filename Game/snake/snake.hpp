@@ -10,7 +10,7 @@
 #include <vector>
 #include <stdio.h>
 #include <dlfcn.h>
-#include "../../Core/include/Core.hpp"
+#include "../include/IGameModule.hpp"
 
 extern "C" {
     void initSnake();
@@ -30,14 +30,14 @@ class snake : public IGameModule
             playerPos player;
             player.xPos = 0;
             printf("initied\nSNAKE\n____________\n");
-        }
+        };
         void stop() override {
             exit(0);
-        }
+        };
         const std::string& getName() const override {
             static const std::string name = "Snake";
             return name;
-        }
+        };
         void goUp();
         void goDown();
         void goLeft();

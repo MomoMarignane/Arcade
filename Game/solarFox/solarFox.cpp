@@ -9,7 +9,7 @@
 #include "solarFox.hpp"
 
 void initSolarFox() __attribute__((constructor));
-void closeSolarFox() __attribute__((constructor));
+void closeSolarFox() __attribute__((destructor));
 extern "C" IGameModule *entryPoint();
 
 void initSolarFox()
@@ -25,5 +25,5 @@ void closeSolarFox()
 extern "C" IGameModule *entryPoint()
 {
     printf("[libSolarFox] entry point !\n");
-    return 0;
+    return new solarFox();
 }

@@ -6,7 +6,7 @@
 */
 
 #pragma once
-#include "../../Core/include/Core.hpp"
+#include "../include/IGameModule.hpp"
 
 extern "C" {
     void initSolarFox();
