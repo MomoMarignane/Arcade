@@ -14,7 +14,9 @@
 class sfml : public IDisplayModule
 {
     public:
-        sfml() {};
+        sfml() {
+
+        };
         ~sfml() {};
         void init() override {
 
@@ -27,16 +29,15 @@ class sfml : public IDisplayModule
 
         //WINDOW//
         void create_window() override {
-            std::cout << "create_window" << std::endl;
-            this->window_->create(sf::VideoMode(800, 600), "My window");
-            // sf::Window window(sf::VideoMode(800, 600), "My window");
+            // this->window_->create(sf::VideoMode(800, 600), "My window");
+            window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "My Game", sf::Style::Resize | sf::Style::Close);
+            
         };
         void close_window() override {
-                // this->window_->close();
-                exit(1);
+                this->window_->close();
         };
         void destruct_window() override {};
-        IDisplayModule::Input handle_key() override {sleep(5); return IDisplayModule::Input::SPACE;};
+        IDisplayModule::Input handle_key() override { window_->display(); sleep(5); return IDisplayModule::Input::SPACE;};
         //DISPLAY//
         void display_board(int **board, std::map<int, char> tab_conversion) override {};
         void display_text(std::string text) override {};
@@ -46,5 +47,5 @@ class sfml : public IDisplayModule
             return false;
         };
     protected:
-        sf::RenderWindow *window_;
+        sf::Window *window_;
 };

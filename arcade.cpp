@@ -32,20 +32,27 @@ void arcade(char *src)
         //     loaderGr.openLoader("lib/ncurses.so");
         // }
         if (graph->handle_key() == IDisplayModule::Input::SPACE ) {
-            graph->close_window();
             if (myStrCmp(graph->getName(), "sfml") == 0) {
+                graph->close_window();
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/ncurses.so");
+                graph = loaderGr.getInstance();
+                graph->create_window();
             }
-            if (myStrCmp(graph->getName(), "ncurses") == 0) {
+            else if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                graph->close_window();
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/sfml.so");
+                graph = loaderGr.getInstance();
+                graph->create_window();
+            } else {
+                Error::err_("Library not founding");
             }
-            graph = loaderGr.getInstance();
             std::cout <<    "titi"  << std::endl;
         }
+        
         // sleep(3);
     }
 
