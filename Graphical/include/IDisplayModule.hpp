@@ -14,7 +14,6 @@ class IDisplayModule
     public:
         enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, START, NONE};
         virtual ~IDisplayModule() = default;
-        virtual void init() = 0;
         virtual void stop() = 0;
         virtual const std::string& getName() const = 0;
 
@@ -25,9 +24,10 @@ class IDisplayModule
 
         //DISPLAY//
         virtual void display_board(int **board, std::map<int, char> tab_conversion) = 0;
-        virtual void display_text(std::string) = 0;
-        virtual Input handle_key() = 0;
+        virtual void display_text(std::string text) = 0;
 
         //EVENT//
+        virtual Input handle_key() = 0;
         virtual bool gameOver() = 0;
+        virtual bool isOpen() = 0;
 };

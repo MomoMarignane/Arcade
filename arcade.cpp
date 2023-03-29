@@ -13,6 +13,25 @@
 #include "Game/include/IGameModule.hpp"
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
+    
+void display_arcade_start()
+{
+    std::cout << "︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻" << std::endl;
+    std::cout << "          :::        :::::::::       ::::::::           :::        :::::::::       ::::::::::" << std::endl;
+    std::cout << "       :+: :+:      :+:    :+:     :+:    :+:        :+: :+:      :+:    :+:      :+:        " << std::endl;
+    std::cout << "     +:+   +:+     +:+    +:+     +:+              +:+   +:+     +:+    +:+      +:+          " << std::endl;
+    std::cout << "   +#++:++#++:    +#++:++#:      +#+             +#++:++#++:    +#+    +:+      +#++:++#      " << std::endl;
+    std::cout << "  +#+     +#+    +#+    +#+     +#+             +#+     +#+    +#+    +#+      +#+            " << std::endl;
+    std::cout << " #+#     #+#    #+#    #+#     #+#    #+#      #+#     #+#    #+#    #+#      #+#             " << std::endl;
+    std::cout << "###     ###    ###    ###      ########       ###     ###    #########       ##########       " << std::endl;
+    std::cout << "︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼ " << std::endl;
+    std::cout << "˃ Starting [ARCADE]" << std::endl;
+    std::cout << "      Make by :" << std::endl;
+    std::cout << "          ➫ Mohamed Mansour" << std::endl;
+    std::cout << "          ➬ Raphael de Monchy" << std::endl;
+    std::cout << "          ➩ Noah Yekken" << std::endl;
+
+}
 
 void arcade(char *src)
 {
@@ -50,7 +69,7 @@ void arcade(char *src)
             } else {
                 Error::err_("Library not founding");
             }
-            std::cout <<    "titi"  << std::endl;
+            std::cout << "titi" << std::endl;
         }
         
         // sleep(3);

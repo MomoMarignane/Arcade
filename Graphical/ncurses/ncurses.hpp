@@ -16,8 +16,6 @@ class ncurses : public IDisplayModule
         ~ncurses() {
             printf("fenêtre ncurses fermée!\n");
         };
-        void init() override {
-        };
         void stop() override {
         };
         const std::string& getName() const override {
@@ -42,11 +40,12 @@ class ncurses : public IDisplayModule
 
         //DISPLAY//
         void display_board(int **board, std::map<int, char> tab_conversion) override;
-        void display_text(std::string) override;
+        void display_text(std::string text) override;
 
         //EVENT//
         IDisplayModule::Input handle_key() override;
-        bool gameOver() override { return false; };
+        bool gameOver() override;
+        bool isOpen() override;
     protected:
         bool is_Open;
         bool is_GameOver;

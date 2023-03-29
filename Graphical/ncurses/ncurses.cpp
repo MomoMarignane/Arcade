@@ -11,6 +11,9 @@ extern "C" void initNcurses() __attribute__((constructor));
 extern "C" void closeNcurses() __attribute__((destructor));
 extern "C" IDisplayModule *entryPoint();
 
+// // MANAGE LIBRAIRIE //
+
+
 extern "C" void initNcurses()
 {
     printf("[ncurses] Loading ncurses library...\n");
@@ -26,6 +29,7 @@ extern "C" IDisplayModule *entryPoint()
     printf("[ncurses] entry point !\n");
     return new ncurses();
 }
+
 
 //INIT NCURSES ELEMENT //
 
@@ -107,4 +111,14 @@ ncurses::IDisplayModule::Input ncurses::handle_key()
         return IDisplayModule::Input::SPACE;
     }
     return ncurses::IDisplayModule::NONE;
+}
+
+bool ncurses::gameOver()
+{
+    return false;
+}
+
+bool ncurses::isOpen()
+{
+    return this->is_Open;
 }
