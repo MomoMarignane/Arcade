@@ -106,5 +106,5 @@ ncurses::IDisplayModule::Input ncurses::handle_key()
     else if (getch() == 32)
         return IDisplayModule::Input::SPACE;
 
-    return ncurses::IDisplayModule::SPACE;
+    return ncurses::IDisplayModule::Input::SPACE;
 }
