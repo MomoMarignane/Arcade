@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 class IDisplayModule
 {
@@ -23,7 +24,7 @@ class IDisplayModule
         virtual void destruct_window() = 0;
 
         //DISPLAY//
-        virtual void display_board(int **board, std::map<int, char> tab_conversion) = 0;
+        virtual void display_board(std::vector<std::string> board) = 0;
         virtual void display_text(std::string text) = 0;
 
         //EVENT//

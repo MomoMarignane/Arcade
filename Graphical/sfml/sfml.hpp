@@ -31,7 +31,7 @@ class sfml : public IDisplayModule
         void destruct_window() override;
 
         //DISPLAY//
-        void display_board(int **board, std::map<int, char> tab_conversion) override;
+        void display_board(std::vector<std::string> board) override;
         void display_text(std::string text) override;
 
         //EVENT//

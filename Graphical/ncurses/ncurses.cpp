@@ -66,17 +66,14 @@ void ncurses::create_window()
 
 // //DISPLAY//
 
-void ncurses::display_board(int **board, std::map<int, char> tab_conversion)
-{
-    int h = 20;
-    int w = 20;
 
+void ncurses::display_board(std::vector<std::string> board)
+{
     clear();
-    for (int i = 0; i < w; i++) {
-        for (int j = 0; j < h; j++) {
-            int value = board[i][j];
-            char character = tab_conversion[value];
-            mvaddch(i, j, character);
+    for (size_t i = 0; i < board.size(); i++) {
+        for (size_t j = 0; j < board[i].size(); j++) {
+            char ptr = board[i][j];
+            mvaddch(i, j, ptr);
         }
     }
     refresh();

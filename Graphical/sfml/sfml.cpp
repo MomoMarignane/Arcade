@@ -47,9 +47,35 @@ void sfml::destruct_window()
 }
 
 // // DISPLAY //
-
-void sfml::display_board(int **board, std::map<int, char> tab_conversion)
+sf::Sprite char_to_sprite(char c)
 {
+    switch (c) {
+        case '*':
+            //WALL//
+            break;
+        case 'o':
+            //SNAKE BODY//
+            break;
+        case 'O':
+            //SNAKE HEAD//
+            break;
+        case '+':
+            //SNAKE FOOD//
+            break;
+        default:
+            std::cout << "Invalid Map" << std::endl;
+            break;
+    }
+}
+
+void sfml::display_board(std::vector<std::string> board)
+{
+    for (size_t i = 0; i < board.size(); i++) {
+        for (size_t j = 0; j < board[i].size(); j++) {
+            char ptrChar = board[i][j];
+            char_to_sprite(ptrChar);
+        }
+    }
 
 }
 
