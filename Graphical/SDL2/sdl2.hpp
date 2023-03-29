@@ -26,6 +26,7 @@ class sdl2 : public IDisplayModule
         void create_window() override {};
         void close_window() override {};
         void destruct_window() override {};
+        IDisplayModule::Input handle_key() override {};
 
             //DISPLAY//
         void display_board(int **board, std::map<int, char> tab_conversion) override {};

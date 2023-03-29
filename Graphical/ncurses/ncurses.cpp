@@ -52,72 +52,70 @@ void ncurses::init_color()
 void ncurses::create_window()
 {
     initscr();
-    // nodelay(stdscr, true);
+    nodelay(stdscr, true);
     curs_set(0);
-    // // ncurses::init_color();
+    ncurses::init_color();
     noecho();
-    // keypad(stdscr, true);
+    keypad(stdscr, true);
     ncurses::is_Open = true;
 }
 
 
 // //DISPLAY//
 
-// void ncurses::display_board(int **board, std::map<int, char> tab_conversion)
-// {
-//     int h = 20;
-//     int w = 20;
+void ncurses::display_board(int **board, std::map<int, char> tab_conversion)
+{
+    int h = 20;
+    int w = 20;
 
-//     clear();
-//     for (int i = 0; i < w; i++) {
-//         for (int j = 0; j < h; j++) {
-//             int value = board[i][j];
-//             char character = tab_conversion[value];
-//             mvaddch(i, j, character);
-//         }
-//     }
-//     refresh();
-// }
+    clear();
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            int value = board[i][j];
+            char character = tab_conversion[value];
+            mvaddch(i, j, character);
+        }
+    }
+    refresh();
+}
 
-// //void ncurses::display_text(std::string text)
-// //{
+void ncurses::display_text(std::string text)
+{
 
-// //}
+}
 
 // // EVENT //
 
-// void ncurses::update()
-// {
-//     wrefresh(stdscr);
-// }
+void ncurses::update()
+{
+    wrefresh(stdscr);
+}
 
-// ncurses::IDisplayModule::Input ncurses::handle_key()
-// {
-//     ncurses::IDisplayModule::Input input;
-
-//         while (getch() != ERR) {
-//             switch(getch()) {
-//                 case KEY_UP:
-//                     input = IDisplayModule::Input::UP;
-//                     break;
-//                 case KEY_DOWN:
-//                     input = IDisplayModule::Input::DOWN;
-//                     break;
-//                 case KEY_LEFT:
-//                     input = IDisplayModule::Input::LEFT;
-//                     break;
-//                 case KEY_RIGHT:
-//                     input = IDisplayModule::Input::RIGHT;
-//                     break;
-//                 case 10:
-//                     input = IDisplayModule::Input::ENTER;
-//                     break;
-//                 case 32:
-//                     input = IDisplayModule::Input::SPACE;
-//                     break;
-//                 default:
-//                     break;
-//         }
-//     }
-//     return input;
-// }
+ncurses::IDisplayModule::Input ncurses::handle_key()
+{
+        while (getch() != ERR) {
+            switch(getch()) {
+                case KEY_UP:
+                    return IDisplayModule::Input::UP;
+                    break;
+                case KEY_DOWN:
+                    return IDisplayModule::Input::DOWN;
+                    break;
+                case KEY_LEFT:
+                   return IDisplayModule::Input::LEFT;
+                    break;
+                case KEY_RIGHT:
+                    return IDisplayModule::Input::RIGHT;
+                    break;
+                case 10:
+                    return IDisplayModule::Input::ENTER;
+                    break;
+                case 32:
+                    return IDisplayModule::Input::SPACE;
+                    break;
+                default:
+                    break;
+        }
+    }
+    return ncurses::IDisplayModule::SPACE;
+}

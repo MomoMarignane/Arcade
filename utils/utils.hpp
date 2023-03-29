@@ -5,6 +5,7 @@
 ** utils.hpp
 */
 
+#include <iostream>
 #pragma once
 
-int myStrCmp(const char *, const char *);
+int myStrCmp(const std::string, const std::string);

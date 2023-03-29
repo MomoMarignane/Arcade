@@ -37,18 +37,22 @@ class ncurses : public IDisplayModule
         void init_color();
 
         //WINDOW//
-        void create_window();
+        void create_window() override;
         void close_window() override {};
         void destruct_window() override {};
 
         //DISPLAY//
-        void display_board(int **board, std::map<int, char> tab_conversion) override {};
-        void display_text(std::string) override {};
+        void display_board(int **board, std::map<int, char> tab_conversion) override;
+        void display_text(std::string) override;
 
         //EVENT//
+        IDisplayModule::Input handle_key() override;
         bool gameOver() override { return false; };
     protected:
         bool is_Open;
         bool is_GameOver;
         int cmd_;
+
+        //UPDATE
+        void update();
 };

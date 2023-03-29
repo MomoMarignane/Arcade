@@ -25,11 +25,11 @@ class sfml : public IDisplayModule
             return name;
         };
 
-        //WINDOW//        
+        //WINDOW//
         void create_window() override {};
         void close_window() override {};
         void destruct_window() override {};
-
+        IDisplayModule::Input handle_key() override {};
         //DISPLAY//
         void display_board(int **board, std::map<int, char> tab_conversion) override {};
         void display_text(std::string text) override {};

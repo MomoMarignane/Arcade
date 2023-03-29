@@ -14,43 +14,33 @@
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
 
-// int initDynamicLib(void *dynamicLib, char *src)
-// {
-//     if (!dynamicLib) {
-//         printf("%s\n", dlerror());
-//         return 0;
-//     }
-//     // snake name_;
-//     // nibbler nib_;
-//     // if (myStrCmp(src, "./lib/nibbler.so") == 0)
-//     //     nib_.init();
-//     dlclose(dynamicLib);
-//     return 0;
-// }
+void arcade(char *src)
+{
+    DLloader <IGameModule> loaderGa;
+    DLloader <IDisplayModule> loaderGr;
+    IDisplayModule *graph;
+    IGameModule *game;
+    loaderGr.openLoader(src);
+    loaderGa.openLoader("lib/solarFox.so");
+    while (1) {
+        graph = loaderGr.getInstance();
+        game = loaderGa.getInstance();
+        graph->init();
+        game->init();
+        if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") != 0) {
+            loaderGr.closeLoader();
+            loaderGr.openLoader("lib/sfml.so");
+        }
+        sleep(3);
+    }
+
+}
 
 int main(int ac, char **av)
 {
     if (ac != 2)
         Error::err_("invalid arguments");
-    // DLloader::DLloader();
-    // void *dynamicLib;
-    // for (int i = 1; av[i]; i += 1) {
-    //     dynamicLib = dlopen(av[i], RTLD_LAZY);
-    //     initDynamicLib(dynamicLib, av[i]);
-    // }
-    DLloader <IGameModule> loaderGa;
-    DLloader <IDisplayModule> loaderGr;
-    IDisplayModule *graph;
-    IGameModule *game;
-    loaderGr.openLoader(av[1]);
-    loaderGa.openLoader("lib/solarFox.so");
-    
-    // graph = loaderGr.getInstance();
-    // game = loaderGa.getInstance();
-    // // graph->
-    // graph->init();
-    // game->init();
-    sleep(3);
+    arcade(av[1]);
 
     return 0;
 }

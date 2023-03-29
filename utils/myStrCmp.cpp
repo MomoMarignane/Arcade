@@ -7,7 +7,7 @@
 
 #include "utils.hpp"
 
-int myStrCmp(const char *src1, const char *src2)
+int myStrCmp(const std::string src1, const std::string src2)
 {
     for (int i = 0; src1[i] != '\0'; i += 1)
         if (src1[i] != src2[i])

@@ -15,7 +15,9 @@ board::board()
 }
 
 board::~board()
-{}
+{
+
+}
 
 void board::loadBoard(char *src)
 {
