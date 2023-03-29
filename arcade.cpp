@@ -12,6 +12,7 @@
 #include "Core/include/Core.hpp"
 #include "Game/include/IGameModule.hpp"
 #include "Graphical/include/IDisplayModule.hpp"
+#include "errorHandling/errorHandling.hpp"
 
 // int initDynamicLib(void *dynamicLib, char *src)
 // {
@@ -29,8 +30,8 @@
 
 int main(int ac, char **av)
 {
-    if (ac < 2)
-        return 84;
+    if (ac != 2)
+        Error::err_("invalid arguments");
     // DLloader::DLloader();
     // void *dynamicLib;
     // for (int i = 1; av[i]; i += 1) {
@@ -41,12 +42,14 @@ int main(int ac, char **av)
     DLloader <IDisplayModule> loaderGr;
     IDisplayModule *graph;
     IGameModule *game;
-    loaderGa.openLoader("lib/solarFox.so");
     loaderGr.openLoader(av[1]);
-    graph = loaderGr.getInstance();
-    game = loaderGa.getInstance();
-    graph->init();
-    game->init();
+    loaderGa.openLoader("lib/solarFox.so");
+    
+    // graph = loaderGr.getInstance();
+    // game = loaderGa.getInstance();
+    // // graph->
+    // graph->init();
+    // game->init();
     sleep(3);
 
     return 0;

@@ -18,18 +18,12 @@ class ncurses : public IDisplayModule
             endwin();
         };
         void init() override {
-            initscr();
-            noecho();
         };
         void stop() override {
-            endwin();
         };
         const std::string& getName() const override {
             static const std::string name = "ncurses";
             return name;
-        };
-        bool gameOver() override {
-            return false;
         };
         void setCmd()
         {
@@ -39,6 +33,22 @@ class ncurses : public IDisplayModule
         {
             return this->cmd_;
         };
+        //INIT COLOR//
+        void init_color();
+
+        //WINDOW//
+        void create_window();
+        void close_window() override {};
+        void destruct_window() override {};
+
+        //DISPLAY//
+        void display_board(int **board, std::map<int, char> tab_conversion) override {};
+        void display_text(std::string) override {};
+
+        //EVENT//
+        bool gameOver() override { return false; };
     protected:
+        bool is_Open;
+        bool is_GameOver;
         int cmd_;
 };

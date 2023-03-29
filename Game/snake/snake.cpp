@@ -28,17 +28,67 @@ extern "C" IGameModule *entryPoint()
     return new snake();
 }
 
-void snake::lostLife()
+void snake::move(char dir)
 {
-    snake::_life -= 1;
+    // mise à jour de la direction
+    if ((dir == 'u' && direction != 'd') ||
+        (dir == 'd' && direction != 'u') ||
+        (dir == 'l' && direction != 'r') ||
+        (dir == 'r' && direction != 'l')) {
+        direction = dir;
+    }
+    // déplacement de la tête
+    playerPos head = body[0];
+    switch (direction) {
+        case 'u':
+            head.yPos--;
+            break;
+        case 'd':
+            head.yPos++;
+            break;
+        case 'l':
+            head.xPos--;
+            break;
+        case 'r':
+            head.xPos++;
+            break;
+    }
+        // ajout de la nouvelle tête
+    body.insert(body.begin(), head);
+
+        // suppression de la queue
+    body.pop_back();
 }
 
-void snake::upScore()
+void snake::grow()
 {
-    _score += 1;
+    playerPos tail = body.back();
+    body.push_back(tail);
 }
 
-void snake::resetLife()
+bool snake::ate(playerPos food) const
 {
-    snake::_life = 3;
+    return body[0].xPos == food.xPos && body[0].yPos == food.yPos;
+}
+
+bool snake::collision() const {
+    const playerPos head = body[0];
+    // vérification si le serpent a touché les murs
+    if (head.xPos < 1 || head.xPos > WIDTH || head.xPos < 1 || head.yPos > HEIGHT || head.yPos < 1) {
+        return true;
+        }
+    // vérification si le serpent a touché sa queue
+    for (unsigned long int i = 1; i < body.size(); i++) {
+        if (head.xPos == body[i].xPos && head.yPos == body[i].yPos) {
+            return true;
+            }
+    // vérification si le serpent a touché sa queue
+    for (unsigned long int i = 1; i < body.size(); i++) {
+        if (head.xPos == body[i].xPos && head.yPos == body[i].yPos) {
+            return true;
+            }
+        }
+        return false;
+    }
+    return true;
 }

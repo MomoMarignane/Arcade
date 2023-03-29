@@ -26,3 +26,98 @@ extern "C" IDisplayModule *entryPoint()
     printf("[ncurses] entry point !\n");
     return new ncurses();
 }
+
+//INIT NCURSES ELEMENT //
+
+void ncurses::init_color()
+{
+    if (!has_colors()) {
+        // la console ne supporte pas les couleurs
+        return;
+    }
+
+    start_color();  // initialisation des couleurs
+
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(4, COLOR_BLUE, COLOR_BLACK);
+    init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(6, COLOR_CYAN, COLOR_BLACK);
+    init_pair(7, COLOR_WHITE, COLOR_BLACK);
+}
+
+// //WINDOW//
+
+void ncurses::create_window()
+{
+    initscr();
+    // nodelay(stdscr, true);
+    curs_set(0);
+    // // ncurses::init_color();
+    noecho();
+    // keypad(stdscr, true);
+    ncurses::is_Open = true;
+}
+
+
+// //DISPLAY//
+
+// void ncurses::display_board(int **board, std::map<int, char> tab_conversion)
+// {
+//     int h = 20;
+//     int w = 20;
+
+//     clear();
+//     for (int i = 0; i < w; i++) {
+//         for (int j = 0; j < h; j++) {
+//             int value = board[i][j];
+//             char character = tab_conversion[value];
+//             mvaddch(i, j, character);
+//         }
+//     }
+//     refresh();
+// }
+
+// //void ncurses::display_text(std::string text)
+// //{
+
+// //}
+
+// // EVENT //
+
+// void ncurses::update()
+// {
+//     wrefresh(stdscr);
+// }
+
+// ncurses::IDisplayModule::Input ncurses::handle_key()
+// {
+//     ncurses::IDisplayModule::Input input;
+
+//         while (getch() != ERR) {
+//             switch(getch()) {
+//                 case KEY_UP:
+//                     input = IDisplayModule::Input::UP;
+//                     break;
+//                 case KEY_DOWN:
+//                     input = IDisplayModule::Input::DOWN;
+//                     break;
+//                 case KEY_LEFT:
+//                     input = IDisplayModule::Input::LEFT;
+//                     break;
+//                 case KEY_RIGHT:
+//                     input = IDisplayModule::Input::RIGHT;
+//                     break;
+//                 case 10:
+//                     input = IDisplayModule::Input::ENTER;
+//                     break;
+//                 case 32:
+//                     input = IDisplayModule::Input::SPACE;
+//                     break;
+//                 default:
+//                     break;
+//         }
+//     }
+//     return input;
+// }

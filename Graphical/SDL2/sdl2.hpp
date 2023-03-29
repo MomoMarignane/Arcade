@@ -5,6 +5,7 @@
 ** sdl2.hpp
 */
 
+#include <map>
 #include "../include/IDisplayModule.hpp"
 #pragma once
 
@@ -22,4 +23,11 @@ class sdl2 : public IDisplayModule
             return name;
         };
         bool gameOver() override {};
+        void create_window() override {};
+        void close_window() override {};
+        void destruct_window() override {};
+
+            //DISPLAY//
+        void display_board(int **board, std::map<int, char> tab_conversion) override {};
+        void display_text(std::string text) override {};
 };

@@ -13,6 +13,9 @@ class board
     public:
         board();
         ~board();
+        int **getBoardMap() {
+            return this->boardMap;
+        }
         void loadBoard(char *);
     protected:
         int **boardMap;
