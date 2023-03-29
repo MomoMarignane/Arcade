@@ -27,10 +27,15 @@ void arcade(char *src)
         game = loaderGa.getInstance();
         graph->init();
         game->init();
-        if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") != 0) {
+        std::cout << "start" << std::endl;
+        if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") == 0) {
+            loaderGr.closeLoader();
+            loaderGr.openLoader("lib/ncurses.so");
+        } else if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") != 0) {
             loaderGr.closeLoader();
             loaderGr.openLoader("lib/sfml.so");
         }
+        std::cout << "end" << std::endl;
         sleep(3);
     }
 

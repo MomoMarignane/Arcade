@@ -93,29 +93,18 @@ void ncurses::update()
 
 ncurses::IDisplayModule::Input ncurses::handle_key()
 {
-        while (getch() != ERR) {
-            switch(getch()) {
-                case KEY_UP:
-                    return IDisplayModule::Input::UP;
-                    break;
-                case KEY_DOWN:
-                    return IDisplayModule::Input::DOWN;
-                    break;
-                case KEY_LEFT:
-                   return IDisplayModule::Input::LEFT;
-                    break;
-                case KEY_RIGHT:
-                    return IDisplayModule::Input::RIGHT;
-                    break;
-                case 10:
-                    return IDisplayModule::Input::ENTER;
-                    break;
-                case 32:
-                    return IDisplayModule::Input::SPACE;
-                    break;
-                default:
-                    break;
-        }
-    }
+    if (getch() == KEY_UP)
+        return IDisplayModule::Input::UP;
+    else if (getch() == KEY_DOWN)
+        return IDisplayModule::Input::DOWN;
+    else if (getch() == KEY_LEFT)
+        return IDisplayModule::Input::LEFT;
+    else if (getch() == KEY_RIGHT)
+        return IDisplayModule::Input::RIGHT;
+    else if (getch() == 10)
+        return IDisplayModule::Input::ENTER;
+    else if (getch() == 32)
+        return IDisplayModule::Input::SPACE;
+
     return ncurses::IDisplayModule::SPACE;
 }
