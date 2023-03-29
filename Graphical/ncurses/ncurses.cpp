@@ -13,12 +13,12 @@ extern "C" IDisplayModule *entryPoint();
 
 extern "C" void initNcurses()
 {
-    printf("[ncurses] Loading Snake library...\n");
+    printf("[ncurses] Loading ncurses library...\n");
 }
 
 extern "C" void closeNcurses()
 {
-    printf("[ncurses] Snake closing.\n");
+    printf("[ncurses] ncurses closing.\n");
 }
 
 extern "C" IDisplayModule *entryPoint()
@@ -52,12 +52,11 @@ void ncurses::init_color()
 void ncurses::create_window()
 {
     initscr();
-    nodelay(stdscr, true);
-    curs_set(0);
-    ncurses::init_color();
+    init_color();
     noecho();
     keypad(stdscr, true);
-    ncurses::is_Open = true;
+    is_Open = true;
+    curs_set(0);
 }
 
 
@@ -93,18 +92,19 @@ void ncurses::update()
 
 ncurses::IDisplayModule::Input ncurses::handle_key()
 {
-    if (getch() == KEY_UP)
+    int c = getch();
+    if (c == KEY_UP)
         return IDisplayModule::Input::UP;
-    else if (getch() == KEY_DOWN)
+    if (c == KEY_DOWN)
         return IDisplayModule::Input::DOWN;
-    else if (getch() == KEY_LEFT)
+    if (c == KEY_LEFT)
         return IDisplayModule::Input::LEFT;
-    else if (getch() == KEY_RIGHT)
+    if (c == KEY_RIGHT)
         return IDisplayModule::Input::RIGHT;
-    else if (getch() == 10)
+    if (c == 10)
         return IDisplayModule::Input::ENTER;
-    else if (getch() == 32)
+    if (c == 32) {
         return IDisplayModule::Input::SPACE;
-
-    return ncurses::IDisplayModule::Input::SPACE;
+    }
+    return ncurses::IDisplayModule::NONE;
 }

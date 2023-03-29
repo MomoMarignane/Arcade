@@ -22,21 +22,31 @@ void arcade(char *src)
     IGameModule *game;
     loaderGr.openLoader(src);
     loaderGa.openLoader("lib/solarFox.so");
+    graph = loaderGr.getInstance();
+    game = loaderGa.getInstance();
+    graph->create_window();
+    // game->init();
     while (1) {
-        graph = loaderGr.getInstance();
-        game = loaderGa.getInstance();
-        graph->init();
-        game->init();
-        std::cout << "start" << std::endl;
-        if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") == 0) {
-            loaderGr.closeLoader();
-            loaderGr.openLoader("lib/ncurses.so");
-        } else if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") != 0) {
-            loaderGr.closeLoader();
-            loaderGr.openLoader("lib/sfml.so");
+        // if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") == 0) {
+        //     loaderGr.closeLoader();
+        //     loaderGr.openLoader("lib/ncurses.so");
+        // }
+        if (graph->handle_key() == IDisplayModule::Input::SPACE ) {
+            graph->close_window();
+            if (myStrCmp(graph->getName(), "sfml") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/ncurses.so");
+            }
+            if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/sfml.so");
+            }
+            graph = loaderGr.getInstance();
+            std::cout <<    "titi"  << std::endl;
         }
-        std::cout << "end" << std::endl;
-        sleep(3);
+        // sleep(3);
     }
 
 }
@@ -46,6 +56,5 @@ int main(int ac, char **av)
     if (ac != 2)
         Error::err_("invalid arguments");
     arcade(av[1]);
-
     return 0;
 }

@@ -15,7 +15,6 @@ class ncurses : public IDisplayModule
         ncurses() {};
         ~ncurses() {
             printf("fenêtre ncurses fermée!\n");
-            endwin();
         };
         void init() override {
         };
@@ -38,7 +37,7 @@ class ncurses : public IDisplayModule
 
         //WINDOW//
         void create_window() override;
-        void close_window() override {};
+        void close_window() override {endwin();};
         void destruct_window() override {};
 
         //DISPLAY//

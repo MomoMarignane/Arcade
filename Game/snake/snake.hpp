@@ -61,7 +61,7 @@ class snake : public IGameModule
         };
 
 
-        char direction;             // la direction dans laquelle le serpent se déplace
+        char direction; // la direction dans laquelle le serpent se déplace
 
         void move(char dir);
 
@@ -81,8 +81,8 @@ class snake : public IGameModule
             int y = rand() % (HEIGHT - 1) + 1;
             return {x, y};
         }
-        
-        std::vector<playerPos> body;  // le corps du serpent
+
+        std::vector<playerPos> body; // le corps du serpent
 
     protected:
         int _life;
@@ -91,5 +91,4 @@ class snake : public IGameModule
         std::vector<int> _map1;
         std::vector<int> _map2;
         std::vector<int> _map3;
-
 };

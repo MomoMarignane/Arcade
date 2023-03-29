@@ -25,7 +25,7 @@ class DLloader
             function_ = ptr();
             return this->function_;
         };
-        T *closeLoader() {
+        T* closeLoader() {
             dlclose(this->dynamicLib_);
             return nullptr;
         };

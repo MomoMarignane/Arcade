@@ -12,7 +12,7 @@ class IDisplayModule
 {
     // protected:
     public:
-        enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, START};
+        enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, START, NONE};
         virtual ~IDisplayModule() = default;
         virtual void init() = 0;
         virtual void stop() = 0;

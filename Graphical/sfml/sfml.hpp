@@ -5,10 +5,11 @@
 ** sfml.hpp
 */
 
+#pragma once
+#include <unistd.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "../include/IDisplayModule.hpp"
-#pragma once
 
 class sfml : public IDisplayModule
 {
@@ -16,8 +17,7 @@ class sfml : public IDisplayModule
         sfml() {};
         ~sfml() {};
         void init() override {
-            window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Arcade - SFML", sf::Style::Resize | sf::Style::Close);
-            window_->setFramerateLimit(60);
+
         };
         void stop() override {};
         const std::string& getName() const override {
@@ -26,10 +26,17 @@ class sfml : public IDisplayModule
         };
 
         //WINDOW//
-        void create_window() override {};
-        void close_window() override {};
+        void create_window() override {
+            std::cout << "create_window" << std::endl;
+            this->window_->create(sf::VideoMode(800, 600), "My window");
+            // sf::Window window(sf::VideoMode(800, 600), "My window");
+        };
+        void close_window() override {
+                // this->window_->close();
+                exit(1);
+        };
         void destruct_window() override {};
-        IDisplayModule::Input handle_key() override {return IDisplayModule::Input::SPACE;};
+        IDisplayModule::Input handle_key() override {sleep(5); return IDisplayModule::Input::SPACE;};
         //DISPLAY//
         void display_board(int **board, std::map<int, char> tab_conversion) override {};
         void display_text(std::string text) override {};
@@ -40,6 +47,4 @@ class sfml : public IDisplayModule
         };
     protected:
         sf::RenderWindow *window_;
-
-
 };
