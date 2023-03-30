@@ -28,7 +28,6 @@ class sfml : public IDisplayModule
         //WINDOW//
         void create_window() override;
         void close_window() override;
-        void destruct_window() override;
 
         //DISPLAY//
         void display_board(std::vector<std::string> board) override;

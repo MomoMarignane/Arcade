@@ -21,7 +21,6 @@ class IDisplayModule
         //WINDOW//
         virtual void create_window() = 0;
         virtual void close_window() = 0;
-        virtual void destruct_window() = 0;
 
         //DISPLAY//
         virtual void display_board(std::vector<std::string> board) = 0;
