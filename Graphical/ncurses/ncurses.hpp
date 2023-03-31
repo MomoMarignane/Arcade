@@ -14,7 +14,6 @@ class ncurses : public IDisplayModule
     public:
         ncurses() {};
         ~ncurses() {
-            printf("fenêtre ncurses fermée!\n");
         };
         void stop() override {
         };
@@ -24,7 +23,6 @@ class ncurses : public IDisplayModule
         };
         void setCmd()
         {
-            this->cmd_ = getch();
         };
         int getCmd()
         {
@@ -35,7 +33,7 @@ class ncurses : public IDisplayModule
 
         //WINDOW//
         void create_window() override;
-        void close_window() override {endwin();};
+        void close_window() override;
 
         //DISPLAY//
         void display_board(std::vector<std::string> board) override;

@@ -38,11 +38,8 @@ void sfml::create_window()
 }
 
 void sfml::close_window()
-{   std::cout << "close window start" << std::endl;
-    std::cout << this->_window.isOpen() << std::endl;
+{
     this->_window.close();
-    std::cout << this->_window.isOpen() << std::endl;
-    std::cout << "close window end" << std::endl;
 }
 
 // // DISPLAY //
@@ -115,8 +112,10 @@ IDisplayModule::Input sfml::handle_key()
     //     }
         while (this->_window.pollEvent(_event))
         {
-            if (_event.type == sf::Event::Closed)
+            if (_event.type == sf::Event::Closed) {
                 this->_window.close();
+                exit (0);
+            }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
                 std::cout << "space" << std::endl;
                 return IDisplayModule::Input::SPACE;

@@ -58,11 +58,16 @@ void ncurses::create_window()
     initscr();
     init_color();
     noecho();
+    nodelay(stdscr, true);
     keypad(stdscr, true);
-    is_Open = true;
+    this->is_Open = true;
     curs_set(0);
 }
 
+void ncurses::close_window()
+{
+//    endwin();
+}
 
 // //DISPLAY//
 
@@ -88,7 +93,7 @@ void ncurses::display_text(std::string text)
 
 void ncurses::update()
 {
-    wrefresh(stdscr);
+    // wrefresh(stdscr);
 }
 
 ncurses::IDisplayModule::Input ncurses::handle_key()
@@ -107,6 +112,12 @@ ncurses::IDisplayModule::Input ncurses::handle_key()
     if (c == 32) {
         return IDisplayModule::Input::SPACE;
     }
+    // if (c == EOF) {
+    //     endwin();
+    //     exit(0);
+    // }
+
+
     return ncurses::IDisplayModule::NONE;
 }
 
