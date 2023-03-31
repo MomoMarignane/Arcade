@@ -34,12 +34,15 @@ extern "C" IDisplayModule *entryPoint()
 void sfml::create_window()
 {
     // this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
-    this->_window.create(sf::VideoMode(100, 100), "My SFML Window");
+    this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
 }
 
 void sfml::close_window()
-{
+{   std::cout << "close window start" << std::endl;
+    std::cout << this->_window.isOpen() << std::endl;
     this->_window.close();
+    std::cout << this->_window.isOpen() << std::endl;
+    std::cout << "close window end" << std::endl;
 }
 
 // // DISPLAY //
@@ -59,7 +62,7 @@ sf::Sprite char_to_sprite(char c)
             //SNAKE FOOD//
             break;
         default:
-            std::cout << "Invalid Map" << std::endl;
+            Error::err_("Invalid map");
             break;
     }
 }
@@ -72,7 +75,6 @@ void sfml::display_board(std::vector<std::string> board)
             char_to_sprite(ptrChar);
         }
     }
-
 }
 
 void sfml::display_text(std::string text)
@@ -85,7 +87,6 @@ void sfml::display_text(std::string text)
 IDisplayModule::Input sfml::handle_key()
 {
     _window.display();
-    sf::Event _event;
 
     // if (this->_window.pollEvent(_event)) {
     //     if (_event.key.code == sf::Event::KeyPressed) {
@@ -112,24 +113,16 @@ IDisplayModule::Input sfml::handle_key()
     //             return sfml::IDisplayModule::Input::SPACE;
     //         }
     //     }
-    sf::Event event;
-        while (this->_window.pollEvent(event))
+        while (this->_window.pollEvent(_event))
         {
-            if (event.type == sf::Event::Closed)
-            {
+            if (_event.type == sf::Event::Closed)
                 this->_window.close();
-            }
-
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
-            {
+            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
                 std::cout << "space" << std::endl;
                 return IDisplayModule::Input::SPACE;
             }
         }
-        
-    // while (this->_window.waitEvent(this->event)) {
     return IDisplayModule::NONE;
-    // return IDisplayModule::Input::SPACE;
 }
 
 bool sfml::gameOver()

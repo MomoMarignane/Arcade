@@ -13,7 +13,7 @@
 #include "Game/include/IGameModule.hpp"
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
-    
+
 void display_arcade_start()
 {
     std::cout << "︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻" << std::endl;
@@ -35,6 +35,7 @@ void display_arcade_start()
 
 void arcade(char *src)
 {
+    int i = 0;
     DLloader <IGameModule> loaderGa;
     DLloader <IDisplayModule> loaderGr;
     IDisplayModule *graph;
@@ -44,37 +45,26 @@ void arcade(char *src)
     graph = loaderGr.getInstance();
     game = loaderGa.getInstance();
     graph->create_window();
-    // game->init();
     while (1) {
-        // if (graph->handle_key() == IDisplayModule::Input::SPACE && myStrCmp(graph->getName(), "sfml") == 0) {
-        //     loaderGr.closeLoader();
-        //     loaderGr.openLoader("lib/ncurses.so");
-        // }
-        if (graph->handle_key() == IDisplayModule::Input::SPACE ) {
+        if (graph->handle_key() == IDisplayModule::Input::SPACE) {
             if (myStrCmp(graph->getName(), "sfml") == 0) {
                 graph->close_window();
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/ncurses.so");
-                graph = loaderGr.getInstance();
-                graph->create_window();
-            }
-            else if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                std::cout << "occurence numéro " << i++ << std::endl;
+            } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
                 graph->close_window();
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/sfml.so");
-                graph = loaderGr.getInstance();
-                graph->create_window();
             } else {
                 Error::err_("Library not founding");
             }
-            std::cout << "titi" << std::endl;
+            graph = loaderGr.getInstance();
+            graph->create_window();
         }
-        
-        // sleep(3);
     }
-
 }
 
 int main(int ac, char **av)

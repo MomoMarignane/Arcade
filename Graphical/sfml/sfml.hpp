@@ -11,13 +11,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Audio.hpp>
 #include "../include/IDisplayModule.hpp"
+#include "../../errorHandling/errorHandling.hpp"
 
 class sfml : public IDisplayModule
 {
     public:
-        sfml() {
-
-        };
+        sfml() {};
         ~sfml() {};
         void stop() override {};
         const std::string& getName() const override {
@@ -37,6 +36,7 @@ class sfml : public IDisplayModule
         IDisplayModule::Input handle_key() override;
         bool gameOver() override;
         bool isOpen() override;
-    protected:
+    // protected:
         sf::RenderWindow _window;
+        sf::Event _event;
 };
