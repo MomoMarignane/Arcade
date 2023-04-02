@@ -12,11 +12,8 @@
 class ncurses : public IDisplayModule
 {
     public:
-        ncurses() {};
-        ~ncurses() {
-        };
-        void stop() override {
-        };
+        ncurses();
+        ~ncurses();
         const std::string& getName() const override {
             static const std::string name = "ncurses";
             return name;
@@ -32,8 +29,11 @@ class ncurses : public IDisplayModule
         void init_color();
 
         //WINDOW//
-        void create_window() override;
-        void close_window() override;
+        // void create_window() override;       move to -> constructor
+        // void close_window() override;        move to -> destructeur
+        void init() override;
+        void update() override;
+        void stop() override;
 
         //DISPLAY//
         void display_board(std::vector<std::string> board) override;
@@ -49,5 +49,4 @@ class ncurses : public IDisplayModule
         int cmd_;
 
         //UPDATE
-        void update();
 };

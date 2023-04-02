@@ -30,6 +30,25 @@ extern "C" IDisplayModule *entryPoint()
     return new ncurses();
 }
 
+//CONSTRUCOT DESTRUCTOR//
+
+ncurses::ncurses()
+{
+    initscr();
+    noecho();
+    nodelay(stdscr, true);
+    keypad(stdscr, true);
+    this->is_Open = true;
+    curs_set(0);
+
+    init_color();
+}
+
+ncurses::~ncurses()
+{
+    endwin();
+}
+
 
 //INIT NCURSES ELEMENT //
 
@@ -41,7 +60,7 @@ void ncurses::init_color()
     }
 
     start_color();  // initialisation des couleurs
-
+    init_pair(0, COLOR_BLACK, COLOR_BLACK);
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, COLOR_YELLOW, COLOR_BLACK);
@@ -53,21 +72,36 @@ void ncurses::init_color()
 
 // //WINDOW//
 
-void ncurses::create_window()
+void ncurses::init()
 {
-    initscr();
-    init_color();
-    noecho();
-    nodelay(stdscr, true);
-    keypad(stdscr, true);
-    this->is_Open = true;
-    curs_set(0);
+
 }
 
-void ncurses::close_window()
+void ncurses::update()
 {
-//    endwin();
+    wrefresh(stdscr);
 }
+
+void ncurses::stop()
+{
+    wclear(stdscr);
+}
+
+// void ncurses::create_window()
+// {
+//     initscr();
+//     init_color();
+//     noecho();
+//     nodelay(stdscr, true);
+//     keypad(stdscr, true);
+//     this->is_Open = true;
+//     curs_set(0);
+// }
+
+// void ncurses::close_window()
+// {
+// //    endwin();
+// }
 
 // //DISPLAY//
 
@@ -86,15 +120,16 @@ void ncurses::display_board(std::vector<std::string> board)
 
 void ncurses::display_text(std::string text)
 {
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
 
+    int y = 0;
+    int x = 0;
+
+    mvprintw(y, x, text.c_str());
 }
 
 // // EVENT //
-
-void ncurses::update()
-{
-    // wrefresh(stdscr);
-}
 
 ncurses::IDisplayModule::Input ncurses::handle_key()
 {

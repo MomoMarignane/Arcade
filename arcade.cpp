@@ -44,7 +44,7 @@ void arcade(char *src)
     loaderGa.openLoader("lib/solarFox.so");
     graph = loaderGr.getInstance();
     game = loaderGa.getInstance();
-    graph->create_window();
+    // graph->create_window();
     std::cout << "[before while 1]" << std::endl;                      //
     while (1) {
         if (graph->handle_key() == IDisplayModule::Input::SPACE) {
@@ -53,7 +53,7 @@ void arcade(char *src)
 
                 std::cout << "getName SFML" << std::endl;               //
                 std::cout << "> graph->close_window() [sfml]" << std::endl;     //
-                graph->close_window();
+                // graph->close_window();
 
                 std::cout << "> delete graph [sfml]" << std::endl;      //
                 delete graph;
@@ -68,7 +68,7 @@ void arcade(char *src)
 
                 std::cout << "getName ncurses" << std::endl;             //
                 std::cout << "> graph->close_window()" << std::endl;     //
-                graph->close_window();
+                // graph->close_window();
 
                 std::cout << "> delete graph [ncurses]" << std::endl;
 
@@ -83,7 +83,7 @@ void arcade(char *src)
             std::cout << "GET INSTANCE" << std::endl;               //
             graph = loaderGr.getInstance();
             std::cout << "create_window" << std::endl;              //
-            graph->create_window();
+            // graph->create_window();
             std::cout << "window created " << std::endl;            //
         }
     }

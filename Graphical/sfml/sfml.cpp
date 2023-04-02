@@ -29,24 +29,63 @@ extern "C" IDisplayModule *entryPoint()
     return new sfml();
 }
 
-// // WINDOW//
+// CONSTRUCTOR DESTRUCTOR //
 
-void sfml::create_window()
+int check_lib()
 {
-    // this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
-    this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
+    return 0;
 }
 
-void sfml::close_window()
+sfml::sfml()
+{
+    this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
+    this->_window.setFramerateLimit(60);
+    this->_window.setKeyRepeatEnabled(true);
+    if (check_lib() > 0)
+        std::cout << "Load SFML librairie : failed" << std::endl;
+}
+
+sfml::~sfml()
 {
     this->_window.close();
 }
 
+// // WINDOW//
+
+void sfml::init()
+{
+
+}
+
+void sfml::update()
+{
+    _window.display();
+}
+
+void sfml::stop()
+{
+    this->_window.clear(sf::Color::Black);
+}
+
+// void sfml::create_window()
+// {
+//     // this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
+//     this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
+// }
+
+// void sfml::close_window()
+// {
+//     this->_window.close();
+// }
+
 // // DISPLAY //
-sf::Sprite char_to_sprite(char c)
+sf::Sprite sfml::char_to_sprite(char c)
 {
     switch (c) {
         case '*':
+            this->_texture.loadFromFile("sprite_a.png");
+            this->_sprite.setTexture(_texture);
+            this->_window.draw(_sprite);
             //WALL//
             break;
         case 'o':
@@ -57,6 +96,9 @@ sf::Sprite char_to_sprite(char c)
             break;
         case '+':
             //SNAKE FOOD//
+            break;
+        case ' ':
+            //BG //
             break;
         default:
             Error::err_("Invalid map");
@@ -80,6 +122,7 @@ void sfml::display_text(std::string text)
 }
 
 // // EVENT //
+
 
 IDisplayModule::Input sfml::handle_key()
 {
