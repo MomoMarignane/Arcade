@@ -5,25 +5,27 @@
 ** sdl2.hpp
 */
 
-#include <map>
-#include "../include/IDisplayModule.hpp"
 #pragma once
+#include <map>
+#include <SDL2/SDL.h>
+#include "../include/IDisplayModule.hpp"
 
 class sdl2 : public IDisplayModule
 {
     public:
-        sdl2() {};
-        ~sdl2() {};
-        void stop() override {};
-        const std::string& getName() const override {
-            static const std::string name = "sdl2";
-            return name;
-        };
-        bool gameOver() override {};
-        void create_window() override {};
-        void close_window() override {};
-        IDisplayModule::Input handle_key() override {};
+        sdl2();
+        ~sdl2();
+        void stop() override;
+        const std::string& getName() const override;
+        void init() override;
+        void update() override;
+        bool gameOver() override;
+        bool isOpen() override;
+        IDisplayModule::Input handle_key() override;
 
-            //DISPLAY//
-        void display_text(std::string text) override {};
+        //DISPLAY//
+        void display_text(std::string text) override;
+        void display_board(std::vector<std::string> board) override;
+    protected:
+        SDL_Window* window_;
 };

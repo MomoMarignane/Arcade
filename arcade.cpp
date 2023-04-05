@@ -1,4 +1,5 @@
 /*
+**
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
@@ -14,7 +15,7 @@
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
 
-void display_arcade_start()
+void displayArcadeStart()
 {
     std::cout << "︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻︻" << std::endl;
     std::cout << "          :::        :::::::::       ::::::::           :::        :::::::::       ::::::::::" << std::endl;
@@ -35,7 +36,8 @@ void display_arcade_start()
 
 void arcade(char *src)
 {
-    int i = 0;
+    // displayArcadeStart();
+    // sleep(5);
     DLloader <IGameModule> loaderGa;
     DLloader <IDisplayModule> loaderGr;
     IDisplayModule *graph;
@@ -44,47 +46,20 @@ void arcade(char *src)
     loaderGa.openLoader("lib/solarFox.so");
     graph = loaderGr.getInstance();
     game = loaderGa.getInstance();
-    // graph->create_window();
-    std::cout << "[before while 1]" << std::endl;                      //
     while (1) {
+        graph->init();
         if (graph->handle_key() == IDisplayModule::Input::SPACE) {
-            std::cout << "[SPACE] Detected" << std::endl;
             if (myStrCmp(graph->getName(), "sfml") == 0) {
-
-                std::cout << "getName SFML" << std::endl;               //
-                std::cout << "> graph->close_window() [sfml]" << std::endl;     //
-                // graph->close_window();
-
-                std::cout << "> delete graph [sfml]" << std::endl;      //
                 delete graph;
-
-                std::cout << "loaderGT.closeLOader() [sfml]" << std::endl;      //
                 loaderGr.closeLoader();
-
-                std::cout << "loaderGT.openLoader(ncurses)" << std::endl;       //
                 loaderGr.openLoader("lib/ncurses.so");
-
             } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
-
-                std::cout << "getName ncurses" << std::endl;             //
-                std::cout << "> graph->close_window()" << std::endl;     //
-                // graph->close_window();
-
-                std::cout << "> delete graph [ncurses]" << std::endl;
-
-                std::cout << "loaderGT.closeLoader() [ncurses]" << std::endl;      //
                 loaderGr.closeLoader();
-
-                std::cout << "openLoader(lib/sfml)" << std::endl;     //
                 loaderGr.openLoader("lib/sfml.so");
             } else {
                 Error::err_("Library not founding");
             }
-            std::cout << "GET INSTANCE" << std::endl;               //
             graph = loaderGr.getInstance();
-            std::cout << "create_window" << std::endl;              //
-            // graph->create_window();
-            std::cout << "window created " << std::endl;            //
         }
     }
 }

@@ -5,6 +5,7 @@
 ** IModules.hpp
 */
 
+#pragma once
 #include <iostream>
 #include <map>
 #include <vector>
@@ -18,15 +19,13 @@ class IDisplayModule
         virtual const std::string& getName() const = 0;
 
         //WINDOW//
-        // virtual void create_window() = 0;
-        // virtual void close_window() = 0;
         virtual void init() = 0;
         virtual void stop() = 0;
         virtual void update() = 0;
 
         //DISPLAY//
         virtual void display_board(std::vector<std::string> board) = 0;
-        virtual void display_text(std::string text) = 0;
+        virtual void display_text(std::string text, int x, int y) = 0;
 
         //EVENT//
         virtual Input handle_key() = 0;

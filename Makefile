@@ -10,23 +10,23 @@ SRC	=	arcade.cpp	\
 
 OBJ	=	$(SRC:.c=.o)
 
-CXX	=	-Wall	-Wextra	-std=c++20
+CXX_FLAGS	=	-Wall	-Wextra	-std=c++20
 
 NAME	=	arcade
 
 all	:	games	graphicals	core
 
 games:
-	g++	$(CXX)	-shared	-fPIC	Game/snake/snake.cpp	-o	lib/snake.so
-	g++	$(CXX)	-shared	-fPIC	Game/solarFox/solarFox.cpp	-o	lib/solarFox.so
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/snake/snake.cpp	-o	lib/snake.so
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/solarFox/solarFox.cpp	-o	lib/solarFox.so
 
 graphicals:
-	g++	$(CXX)	-shared	-fPIC	Graphical/ncurses/ncurses.cpp	-o	lib/ncurses.so	-lncurses
-	g++	$(CXX)	-shared	-fPIC	Graphical/sfml/sfml.cpp	-o	lib/sfml.so	-lsfml-graphics	-lsfml-window	-lsfml-system
-# g++	$(CXX)	-lSDL2_image	-lSDL2_ttf	-lSDL2	-lSDL2main	-shared	-fPIC	Graphical/SDL2/sdl2.cpp	-o	lib/sdl2.so
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Graphical/ncurses/ncurses.cpp	-o	lib/ncurses.so	-lncurses
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Graphical/sfml/sfml.cpp	-o	lib/sfml.so	-lsfml-graphics	-lsfml-window	-lsfml-system
+# g++	$(CXX_FLAGS)	-shared	-fPIC	Graphical/SDL2/sdl2.cpp	-o	lib/sdl2.so	-lSDL2_ttf	-lSDL2	-lSDL2main	-lSDL2_image
 
-core: $(NAME) $(SRC)
-	g++	$(CXX)	$(SRC)	-ldl	-o	$(NAME)
+core: $(SRC)
+	g++	$(CXX_FLAGS)	$(SRC)	-ldl	-o	$(NAME)
 
 clean	:
 	rm	-f	*.o

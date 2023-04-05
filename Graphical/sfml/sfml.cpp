@@ -116,7 +116,7 @@ void sfml::display_board(std::vector<std::string> board)
     }
 }
 
-void sfml::display_text(std::string text)
+void sfml::display_text(std::string text, int x, int y)
 {
 
 }
@@ -160,7 +160,6 @@ IDisplayModule::Input sfml::handle_key()
                 exit (0);
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
-                std::cout << "space" << std::endl;
                 return IDisplayModule::Input::SPACE;
             }
         }

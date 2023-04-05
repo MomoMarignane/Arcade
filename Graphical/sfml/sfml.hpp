@@ -32,7 +32,7 @@ class sfml : public IDisplayModule
 
         //DISPLAY//
         void display_board(std::vector<std::string> board) override;
-        void display_text(std::string text) override;
+        void display_text(std::string text, int x, int y) override;
         sf::Sprite char_to_sprite(char c);
 
 

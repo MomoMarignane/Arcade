@@ -29,15 +29,13 @@ class ncurses : public IDisplayModule
         void init_color();
 
         //WINDOW//
-        // void create_window() override;       move to -> constructor
-        // void close_window() override;        move to -> destructeur
         void init() override;
         void update() override;
         void stop() override;
 
         //DISPLAY//
         void display_board(std::vector<std::string> board) override;
-        void display_text(std::string text) override;
+        void display_text(std::string text, int x, int y) override;
 
         //EVENT//
         IDisplayModule::Input handle_key() override;

@@ -70,11 +70,11 @@ void ncurses::init_color()
     init_pair(7, COLOR_WHITE, COLOR_BLACK);
 }
 
-// //WINDOW//
+//WINDOW//
 
 void ncurses::init()
 {
-
+    ncurses::display_text("MENU", 10, 10);
 }
 
 void ncurses::update()
@@ -86,22 +86,6 @@ void ncurses::stop()
 {
     wclear(stdscr);
 }
-
-// void ncurses::create_window()
-// {
-//     initscr();
-//     init_color();
-//     noecho();
-//     nodelay(stdscr, true);
-//     keypad(stdscr, true);
-//     this->is_Open = true;
-//     curs_set(0);
-// }
-
-// void ncurses::close_window()
-// {
-// //    endwin();
-// }
 
 // //DISPLAY//
 
@@ -118,15 +102,12 @@ void ncurses::display_board(std::vector<std::string> board)
     refresh();
 }
 
-void ncurses::display_text(std::string text)
+void ncurses::display_text(std::string text, int x, int y)
 {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
 
-    int y = 0;
-    int x = 0;
-
-    mvprintw(y, x, text.c_str());
+    mvprintw(max_y / 2, max_x / 2, text.c_str());
 }
 
 // // EVENT //
