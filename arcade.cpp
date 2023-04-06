@@ -44,16 +44,16 @@ void arcade(char *src)
     IDisplayModule *graph;
     IGameModule *game;
     loaderGr.openLoader(src);
-    loaderGa.openLoader("libGame/solarFox.so");
     graph = loaderGr.getInstance();
-    game = loaderGa.getInstance();
     // board solarBoard;
     // solarBoard.setBoardMap("Game/snake/map/snakeMap");
     board snakeBoard;
     snakeBoard.setBoardMapSnake("Game/snake/map/snakeMap");
+    int key = 0;
     while (1) {
         graph->init();
-        if (graph->handle_key() == IDisplayModule::Input::SPACE) {
+        key = graph->handle_key();
+        if (key == IDisplayModule::Input::SPACE) {
             if (myStrCmp(graph->getName(), "sfml") == 0) {
                 delete graph;
                 loaderGr.closeLoader();
@@ -65,6 +65,11 @@ void arcade(char *src)
                 Error::err_("Library not founding");
             }
             graph = loaderGr.getInstance();
+        }
+        if (key == IDisplayModule::Input::StartSnake) {
+            loaderGa.openLoader("libGame/snake.so");
+            game = loaderGa.getInstance();
+            exit(15);
         }
     }
 }

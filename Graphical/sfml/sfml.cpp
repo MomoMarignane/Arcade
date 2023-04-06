@@ -11,7 +11,7 @@ extern "C" void initSfml() __attribute__ ((constructor));
 extern "C" void closeSfml() __attribute__ ((destructor));
 extern "C" IDisplayModule *entryPoint();
 
-// // MANAGE LIBRAIRIE //
+// MANAGE LIBRAIRIE //
 
 extern "C" void initSfml()
 {
@@ -38,7 +38,7 @@ int check_lib()
 
 sfml::sfml()
 {
-    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
+    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Resize | sf::Style::Close);
     this->_window.setFramerateLimit(60);
     this->_window.setKeyRepeatEnabled(true);
     if (check_lib() > 0)
@@ -50,14 +50,13 @@ sfml::~sfml()
     this->_window.close();
 }
 
-// // WINDOW//
+// WINDOW//
 
 void sfml::init()
 {
     sf::Color darkColor(100, 100, 100, 255);
     bool isDark = false;
-    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png"))
-    {
+    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png")) {
         std::cerr << "Erreur load sprite" << std::endl;
         exit(84);
     }
@@ -65,7 +64,7 @@ void sfml::init()
     // SET BG menu
     sf::Vector2i vector = {sfml::getSizeWindowX(), sfml::getSizeWindowY()};
     this->_sprite.setTexture(this->_texture);
-    this->_sprite.setPosition(sfml::getSizeWindowX() / 4, sfml::getSizeWindowY() / 10);
+    this->_sprite.setPosition(100, 0);
     this->_window.draw(this->_sprite);
     //SET SNAKE BUTTON
     this->_SsnakeB.setTexture(this->_TSnakeB);
@@ -75,9 +74,6 @@ void sfml::init()
     this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
     this->_SsolarFoxB.setPosition(sfml::getSizeWindowX() / 1.82, sfml::getSizeWindowY() / 3);
     this->_window.draw(this->_SsolarFoxB);
-
-
-
 }
 
 void sfml::update()
@@ -89,19 +85,7 @@ void sfml::stop()
 {
     this->_window.clear(sf::Color::Black);
 }
-
-// void sfml::create_window()
-// {
-//     // this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
-//     this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
-// }
-
-// void sfml::close_window()
-// {
-//     this->_window.close();
-// }
-
-// // DISPLAY //
+// DISPLAY //
 sf::Sprite sfml::char_to_sprite(char c)
 {
     switch (c) {
@@ -144,38 +128,12 @@ void sfml::display_text(std::string text, int x, int y)
 
 }
 
-// // EVENT //
+// EVENT //
 
 
 IDisplayModule::Input sfml::handle_key()
 {
     _window.display();
-
-    // if (this->_window.pollEvent(_event)) {
-    //     if (_event.key.code == sf::Event::KeyPressed) {
-    //         if (_event.key.code == sf::Keyboard::Escape) {
-    //             std::cout << _event.key.code << std::endl;
-    //             return sfml::IDisplayModule::Input::ESCAPE;
-    //         }
-    //         if (_event.key.code == sf::Keyboard::Up) {
-    //             std::cout << _event.key.code << std::endl;
-    //             return sfml::IDisplayModule::Input::UP;
-    //         }
-    //         if (_event.key.code == sf::Keyboard::Down) {
-    //             std::cout << _event.key.code << std::endl;
-    //             return sfml::IDisplayModule::Input::DOWN;
-    //         }
-    //         if (_event.key.code == sf::Keyboard::Left)
-    //             return sfml::IDisplayModule::Input::LEFT;
-    //         if (_event.key.code == sf::Keyboard::Right)
-    //             return sfml::IDisplayModule::Input::RIGHT;
-    //         if (_event.key.code == sf::Keyboard::Enter)
-    //             return sfml::IDisplayModule::Input::ENTER;
-    //         if (_event.key.code == sf::Keyboard::Space) {
-    //             std::cout << _event.type << std::endl;
-    //             return sfml::IDisplayModule::Input::SPACE;
-    //         }
-    //     }
         while (this->_window.pollEvent(_event))
         {
             if (_event.type == sf::Event::Closed) {
@@ -186,7 +144,7 @@ IDisplayModule::Input sfml::handle_key()
                 return IDisplayModule::Input::SPACE;
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num1) {
-                exit(123);
+                return IDisplayModule::Input::StartSnake;
             }
         }
     return IDisplayModule::NONE;

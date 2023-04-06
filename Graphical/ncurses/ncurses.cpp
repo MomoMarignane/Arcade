@@ -154,9 +154,10 @@ ncurses::IDisplayModule::Input ncurses::handle_key()
         return IDisplayModule::Input::RIGHT;
     if (c == 10)
         return IDisplayModule::Input::ENTER;
-    if (c == 32) {
+    if (c == 32)
         return IDisplayModule::Input::SPACE;
-    }
+    if (c == 49 || c == '&')
+        return IDisplayModule::Input::StartSnake;
     // if (c == EOF) {
     //     endwin();
     //     exit(0);

@@ -14,7 +14,7 @@ class IDisplayModule
 {
     // protected:
     public:
-        enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, START, NONE};
+        enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, StartSnake, StartSfox, NONE};
         virtual ~IDisplayModule() = default;
         virtual const std::string& getName() const = 0;
 
