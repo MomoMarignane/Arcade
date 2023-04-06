@@ -15,17 +15,17 @@ extern "C" IDisplayModule *entryPoint();
 
 extern "C" void initSfml()
 {
-    printf("[sfml] Loading sfml library...\n");
+    // printf("[sfml] Loading sfml library...\n");
 }
 
 extern "C" void closeSfml()
 {
-    printf("[sfml] sfml closing.\n");
+    // printf("[sfml] sfml closing.\n");
 }
 
 extern "C" IDisplayModule *entryPoint()
 {
-    printf("[sfml] entry point !\n");
+    // printf("[sfml] entry point !\n");
     return new sfml();
 }
 
@@ -184,6 +184,9 @@ IDisplayModule::Input sfml::handle_key()
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
                 return IDisplayModule::Input::SPACE;
+            }
+            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num1) {
+                exit(123);
             }
         }
     return IDisplayModule::NONE;

@@ -14,18 +14,29 @@ extern "C" IGameModule *entryPoint();
 
 void initSnake()
 {
-    printf("[libSnake] Loading Snake library...\n");
+    // printf("[libSnake] Loading Snake library...\n");
 }
 
 void closeSnake()
 {
-    printf("[libSnake] Snake closing.\n");
+    // printf("[libSnake] Snake closing.\n");
 }
 
 extern "C" IGameModule *entryPoint()
 {
-    printf("[libSnake] entry point !\n");
+    // printf("[libSnake] entry point !\n");
     return new snake();
+}
+
+void snake::init()
+{
+    _life = 3;
+    _score = 0;
+    for (int i = 0; i < 5; i += 1)
+        _lifeMob.push_back(2);
+    playerPos player;
+    player.xPos = 0;
+    printf("initied\nSNAKE\n__\n");
 }
 
 void snake::move(char dir)
@@ -90,5 +101,12 @@ bool snake::collision() const {
         }
         return false;
     }
+    return true;
+}
+
+bool snake::gameOver()
+{
+    if (!this->collision())
+        return false;
     return true;
 }

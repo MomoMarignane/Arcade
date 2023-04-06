@@ -13,17 +13,17 @@ extern "C" IDisplayModule *entryPoint();
 
 extern "C" void initSdl2()
 {
-    printf("[sdl2] Loading sdl2 library...\n");
+    // printf("[sdl2] Loading sdl2 library...\n");
 }
 
 extern "C" void closeSdl2()
 {
-    printf("[sdl2] sdl2 closing.\n");
+    // printf("[sdl2] sdl2 closing.\n");
 }
 
 extern "C" IDisplayModule *entryPoint()
 {
-    printf("[sdl2] entry point !\n");
+    // printf("[sdl2] entry point !\n");
     return new sdl2();
 }
 

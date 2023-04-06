@@ -14,6 +14,7 @@
 #include "Game/include/IGameModule.hpp"
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
+#include "board/board.hpp"
 
 void displayArcadeStart()
 {
@@ -43,9 +44,13 @@ void arcade(char *src)
     IDisplayModule *graph;
     IGameModule *game;
     loaderGr.openLoader(src);
-    loaderGa.openLoader("lib/solarFox.so");
+    loaderGa.openLoader("libGame/solarFox.so");
     graph = loaderGr.getInstance();
     game = loaderGa.getInstance();
+    // board solarBoard;
+    // solarBoard.setBoardMap("Game/snake/map/snakeMap");
+    board snakeBoard;
+    snakeBoard.setBoardMapSnake("Game/snake/map/snakeMap");
     while (1) {
         graph->init();
         if (graph->handle_key() == IDisplayModule::Input::SPACE) {

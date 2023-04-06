@@ -35,19 +35,13 @@ class snake : public IGameModule
         };
         ~snake() {};
 
-        void init() override {
-            _life = 3;
-            _score = 0;
-            for (int i = 0; i < 5; i += 1)
-                _lifeMob.push_back(2);
-            playerPos player;
-            player.xPos = 0;
-            printf("initied\nSNAKE\n__\n");
-        };
+        void init() override;
 
         void stop() override {
             exit(0);
         };
+
+        virtual bool gameOver() override;
 
         const std::string& getName() const override {
             static const std::string name = "Snake";
@@ -59,7 +53,6 @@ class snake : public IGameModule
             int xPos;
             int yPos;
         };
-
 
         char direction; // la direction dans laquelle le serpent se déplace
 

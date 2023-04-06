@@ -26,5 +26,5 @@ class solarFox : public IGameModule
             static const std::string name = "Qix";
             return name;
         };
-
+        virtual bool gameOver() override {return false;};
 };

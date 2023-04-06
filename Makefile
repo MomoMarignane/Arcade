@@ -7,6 +7,7 @@
 
 SRC	=	arcade.cpp	\
 		utils/myStrCmp.cpp	\
+		board/board.cpp	\
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -17,8 +18,8 @@ NAME	=	arcade
 all	:	games	graphicals	core
 
 games:
-	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/snake/snake.cpp	-o	lib/snake.so
-	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/solarFox/solarFox.cpp	-o	lib/solarFox.so
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/snake/snake.cpp	-o	libGame/snake.so
+	g++	$(CXX_FLAGS)	-shared	-fPIC	Game/solarFox/solarFox.cpp	-o	libGame/solarFox.so
 
 graphicals:
 	g++	$(CXX_FLAGS)	-shared	-fPIC	Graphical/ncurses/ncurses.cpp	-o	lib/ncurses.so	-lncurses

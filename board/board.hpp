@@ -5,21 +5,25 @@
 ** board.hpp
 */
 
-#pragma once
 #include <map>
 #include <vector>
+#include <fstream>
 #include <iostream>
+#include <string>
+// #pragma once
 
 class board
 {
     public:
         board();
         ~board();
-        void setBoardMap(char *);
-        std::vector<std::string> getBoardMap() {
-            return this->boardMap;
-        }
-        void loadBoard(std::vector<std::string> &_board);
+        void setBoardMapSnake(const std::string& filename);
+        void setBoardMapSfox(const std::string& filename);
+        void updateSnake() {};
+        void updateSfox() {};
+        std::vector<std::string> getBoardMapSnake();
+        std::vector<std::string> getBoardMapSfox();
     protected:
-        std::vector<std::string> boardMap;
+        std::vector<std::string> boardMapSnake;
+        std::vector<std::string> boardMapSfox;
 };

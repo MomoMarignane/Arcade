@@ -16,17 +16,17 @@ extern "C" IDisplayModule *entryPoint();
 
 extern "C" void initNcurses()
 {
-    printf("[ncurses] Loading ncurses library...\n");
+    // printf("[ncurses] Loading ncurses library...\n");
 }
 
 extern "C" void closeNcurses()
 {
-    printf("[ncurses] ncurses closing.\n");
+    // printf("[ncurses] ncurses closing.\n");
 }
 
 extern "C" IDisplayModule *entryPoint()
 {
-    printf("[ncurses] entry point !\n");
+    // printf("[ncurses] entry point !\n");
     return new ncurses();
 }
 

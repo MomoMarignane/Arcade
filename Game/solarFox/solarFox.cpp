@@ -14,16 +14,16 @@ extern "C" IGameModule *entryPoint();
 
 void initSolarFox()
 {
-    printf("[libSolarFox] Loading SolarFox library...\n");
+    // printf("[libSolarFox] Loading SolarFox library...\n");
 }
 
 void closeSolarFox()
 {
-    printf("[libSolarFox] SolarFox closing.\n");
+    // printf("[libSolarFox] SolarFox closing.\n");
 }
 
 extern "C" IGameModule *entryPoint()
 {
-    printf("[libSolarFox] entry point !\n");
+    // printf("[libSolarFox] entry point !\n");
     return new solarFox();
 }
