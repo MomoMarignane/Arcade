@@ -40,9 +40,23 @@ class sfml : public IDisplayModule
         IDisplayModule::Input handle_key() override;
         bool gameOver() override;
         bool isOpen() override;
-    // protected:
+
+        //WSIZE//
+        int getSizeWindowX() override;
+        int getSizeWindowY() override;
+
+    protected:
         sf::RenderWindow _window;
         sf::Event _event;
+        sf::Font _font;
+        //MENU BG
         sf::Texture _texture;
         sf::Sprite _sprite;
+        //BOUTON
+        sf::Event _clickButton;
+        sf::Texture _TsolarFoxB;
+        sf::Texture _TSnakeB;
+
+        sf::Sprite _SsolarFoxB;
+        sf::Sprite _SsnakeB;
 };

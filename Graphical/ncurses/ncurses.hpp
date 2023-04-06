@@ -41,10 +41,13 @@ class ncurses : public IDisplayModule
         IDisplayModule::Input handle_key() override;
         bool gameOver() override;
         bool isOpen() override;
+    
+        //WSIZE//
+        int getSizeWindowX() override;
+        int getSizeWindowY() override;
+    
     protected:
         bool is_Open;
         bool is_GameOver;
         int cmd_;
-
-        //UPDATE
 };

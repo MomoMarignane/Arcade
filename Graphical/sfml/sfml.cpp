@@ -38,7 +38,7 @@ int check_lib()
 
 sfml::sfml()
 {
-    this->_window.create(sf::VideoMode(1900, 1080), "My SFML Window");
+    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window");
     this->_window.setFramerateLimit(60);
     this->_window.setKeyRepeatEnabled(true);
     if (check_lib() > 0)
@@ -54,6 +54,29 @@ sfml::~sfml()
 
 void sfml::init()
 {
+    sf::Color darkColor(100, 100, 100, 255);
+    bool isDark = false;
+    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png"))
+    {
+        std::cerr << "Erreur load sprite" << std::endl;
+        exit(84);
+    }
+    this->_window.clear();
+    // SET BG menu
+    sf::Vector2i vector = {sfml::getSizeWindowX(), sfml::getSizeWindowY()};
+    this->_sprite.setTexture(this->_texture);
+    this->_sprite.setPosition(sfml::getSizeWindowX() / 4, sfml::getSizeWindowY() / 10);
+    this->_window.draw(this->_sprite);
+    //SET SNAKE BUTTON
+    this->_SsnakeB.setTexture(this->_TSnakeB);
+    this->_SsnakeB.setPosition(sfml::getSizeWindowX() / 2.5, sfml::getSizeWindowY() / 3);
+    this->_window.draw(this->_SsnakeB);
+    //SET SOLARFOX BUTTON
+    this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
+    this->_SsolarFoxB.setPosition(sfml::getSizeWindowX() / 1.82, sfml::getSizeWindowY() / 3);
+    this->_window.draw(this->_SsolarFoxB);
+
+
 
 }
 
@@ -174,4 +197,18 @@ bool sfml::gameOver()
 bool sfml::isOpen()
 {
     return this->_window.isOpen();
+}
+
+//WSIZE//
+
+int sfml::getSizeWindowX()
+{
+    int windowSize = this->_window.getSize().x;
+    return windowSize;
+}
+
+int sfml::getSizeWindowY()
+{
+    int windowSize = this->_window.getSize().y;
+    return windowSize;
 }

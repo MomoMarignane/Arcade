@@ -22,7 +22,7 @@ void board::loadBoard(std::vector<std::string> &_board)
     this->boardMap = _board;
 }
 
-extern "C" void setBoardMap(char *src)
+void setBoardMap(char *src)
 {
     
 }

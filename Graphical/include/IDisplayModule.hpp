@@ -31,4 +31,8 @@ class IDisplayModule
         virtual Input handle_key() = 0;
         virtual bool gameOver() = 0;
         virtual bool isOpen() = 0;
+
+        //WSIZE//
+        virtual int getSizeWindowX() = 0;
+        virtual int getSizeWindowY() = 0;
 };

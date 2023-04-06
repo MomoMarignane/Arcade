@@ -7,13 +7,15 @@
 
 #pragma once
 #include <map>
+#include <vector>
+#include <iostream>
 
 class board
 {
     public:
         board();
         ~board();
-        extern "C" void setBoardMap(char *);
+        void setBoardMap(char *);
         std::vector<std::string> getBoardMap() {
             return this->boardMap;
         }

@@ -24,8 +24,11 @@ class sdl2 : public IDisplayModule
         IDisplayModule::Input handle_key() override;
 
         //DISPLAY//
-        void display_text(std::string text) override;
+        void display_text(std::string text, int x, int y) override;
         void display_board(std::vector<std::string> board) override;
+        int getSizeWindowX() override {};
+        int getSizeWindowY() override {};
+    
     protected:
         SDL_Window* window_;
 };
