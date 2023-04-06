@@ -74,30 +74,39 @@ void ncurses::init_color()
 
 void ncurses::init()
 {
-    ncurses::display_text("MENU", 10, 10);
+    // ncurses::display_text("MENU", 10, 10);
     // clear();
     const char *titleA = "ARCADE";
     const char *titleS = "[1]Snake";
     const char *titleSF = "[2] -> SolarFOX";
     refresh();
 
-    int menu_height = 10;
-    int menu_width = 40;
-    int menu_y = LINES / 2 - menu_height / 2;
-    int menu_x = COLS / 2 - menu_width / 2;
+    int windowHeight, windowWidth;
+    getmaxyx(stdscr, windowHeight, windowWidth);
 
-    mvprintw(menu_y, menu_x, "########################################");
-    mvprintw(menu_y + menu_height - 1, menu_x, "########################################");
-    mvprintw(menu_y + menu_height / 2, COLS / 2 - 4, titleA);
+    // Calcule la position de chaque élément du menu
+    int titleX = (windowWidth - 30) / 2; // Centre le titre
+    int titleY = (windowHeight - 6) / 3;
+    int promptX = (windowWidth - 23) / 2; // Centre la prompt
+    int promptY = titleY + 4;
+    int snakeX = promptX - 10;
+    int snakeY = promptY + 2;
+    int solarFoxX = promptX + 6;
+    int solarFoxY = promptY + 2;
 
-    int sB_y = menu_y + menu_height / 2 - 2;
-    int pB_y = menu_y + menu_height / 2 + 2;
-    int B_width = 20;
-    int B_x = menu_x + menu_width / 2 - B_width / 2;
+    // Affiche le titre
+    mvprintw(titleY, titleX, "/##################################\\");
+    mvprintw(titleY + 1, titleX, "#               ARCADE             #");
+    mvprintw(titleY + 2, titleX, "#----------------------------------#");
+    mvprintw(titleY + 3, titleX, "#                _____             #");
+    mvprintw(titleY + 4, titleX, "#                Press             #");
+    mvprintw(titleY + 5, titleX, "#        [1]                [2]    #");
+    mvprintw(titleY + 6, titleX, "#      Snake             SolarFox  #");
+    mvprintw(titleY + 7, titleX, "#                                  #");
+    mvprintw(titleY + 8, titleX, "\\##################################/");
+    mvprintw(titleY + 9, titleX, "=[MENU]=>==>==>==>==>==>==>==>==>=>=");
 
-    mvprintw(sB_y, B_x, titleS);
-    mvprintw(pB_y, B_x, titleSF);
-    // refresh(); // rafraîchissement de l'écran
+
 }
 
 void ncurses::update()
