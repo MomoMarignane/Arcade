@@ -17,6 +17,7 @@ lib.hpp
 #include <cstdlib>
 #include <ctime>
 #include "../include/IGameModule.hpp"
+#include "../../utils/utils.hpp"
 
 extern "C" {
     void initSnake();
@@ -27,62 +28,63 @@ extern "C" {
 const int HEIGHT = 10;
 const int WIDTH = 20;
 
-class snake : public IGameModule
-{
-    public:
-        snake() {
-        body = {{10, 10}, {10, 9}, {10, 8}}; // tête, corps, queue
-        direction = 'r'; // direction initiale
-        };
-        ~snake() {};
 
-        void init() override;
+    class snake : public arc::IGameModule
+    {
+        public:
+            snake() {
+            body = {{10, 10}, {10, 9}, {10, 8}}; // tête, corps, queue
+            direction = 'r'; // direction initiale
+            };
+            ~snake() {};
 
-        void stop() override {
-            exit(0);
-        };
+            void init() override;
 
-        virtual bool gameOver() override;
+            void stop() override {
+                exit(0);
+            };
 
-        const std::string& getName() const override {
-            static const std::string name = "Snake";
-            return name;
-        };
+            virtual bool gameOver() override;
 
-        struct playerPos
-        {
-            int xPos;
-            int yPos;
-        };
+            const std::string& getName() const override {
+                static const std::string name = "Snake";
+                return name;
+            };
 
-        char direction; // la direction dans laquelle le serpent se déplace
+            struct playerPos
+            {
+                int xPos;
+                int yPos;
+            };
 
-        void move(char dir);
+            char direction; // la direction dans laquelle le serpent se déplace
 
-        void grow();
+            void move(char dir);
 
-        const std::vector<playerPos>& getBody() const {
-            return body;
-        }
+            void grow();
 
-        bool ate(playerPos food) const;
+            const std::vector<playerPos>& getBody() const {
+                return body;
+            }
 
-        bool collision() const;
+            bool ate(playerPos food) const;
 
-        playerPos generateFood()
-        {
-            int x = rand() % (WIDTH - 1) + 1;
-            int y = rand() % (HEIGHT - 1) + 1;
-            return {x, y};
-        }
+            bool collision() const;
 
-        std::vector<playerPos> body; // le corps du serpent
+            playerPos generateFood()
+            {
+                int x = rand() % (WIDTH - 1) + 1;
+                int y = rand() % (HEIGHT - 1) + 1;
+                return {x, y};
+            }
 
-    protected:
-        int _life;
-        int _score;
-        std::vector<int> _lifeMob;
-        std::vector<std::string> _map1;
-        std::vector<std::string> _map2;
-        std::vector<std::string> _map3;
-};
+            std::vector<playerPos> body; // le corps du serpent
+            std::vector<std::string> update(arc::Input, std::vector<std::string>) override;
+        protected:
+            int _life;
+            int _score;
+            std::vector<int> _lifeMob;
+            std::vector<std::string> _map1;
+            std::vector<std::string> _map2;
+            std::vector<std::string> _map3;
+    };

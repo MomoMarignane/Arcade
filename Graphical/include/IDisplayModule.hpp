@@ -9,30 +9,33 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include "../../utils/utils.hpp"
 
-class IDisplayModule
-{
-    // protected:
-    public:
-        enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, StartSnake, StartSfox, NONE};
-        virtual ~IDisplayModule() = default;
-        virtual const std::string& getName() const = 0;
+namespace arc {
 
-        //WINDOW//
-        virtual void init() = 0;
-        virtual void stop() = 0;
-        virtual void update() = 0;
+    class IDisplayModule
+    {
+        // protected:
+        public:
+            virtual ~IDisplayModule() = default;
+            virtual const std::string& getName() const = 0;
 
-        //DISPLAY//
-        virtual void display_board(std::vector<std::string> board) = 0;
-        virtual void display_text(std::string text, int x, int y) = 0;
+            //WINDOW//
+            virtual void init() = 0;
+            virtual void stop() = 0;
+            virtual void update() = 0;
 
-        //EVENT//
-        virtual Input handle_key() = 0;
-        virtual bool gameOver() = 0;
-        virtual bool isOpen() = 0;
+            //DISPLAY//
+            virtual void display_board(std::vector<std::string> board) = 0;
+            virtual void display_text(std::string text, int x, int y) = 0;
 
-        //WSIZE//
-        virtual int getSizeWindowX() = 0;
-        virtual int getSizeWindowY() = 0;
+            //EVENT//
+            virtual arc::Input handle_key() = 0;
+            virtual bool gameOver() = 0;
+            virtual bool isOpen() = 0;
+
+            //WSIZE//
+            virtual int getSizeWindowX() = 0;
+            virtual int getSizeWindowY() = 0;
+    };
 };

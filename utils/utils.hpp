@@ -9,3 +9,7 @@
 #pragma once
 
 int myStrCmp(const std::string, const std::string);
+
+namespace arc {
+    enum Input {LEFT, RIGHT, UP, DOWN, ENTER, SPACE, ESCAPE, nextGame, prevGame, nextLib, prevLib, StartSnake, StartSfox, NONE};
+};

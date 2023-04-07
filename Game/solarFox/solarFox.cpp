@@ -10,7 +10,7 @@
 
 void initSolarFox() __attribute__((constructor));
 void closeSolarFox() __attribute__((destructor));
-extern "C" IGameModule *entryPoint();
+extern "C" arc::IGameModule *entryPoint();
 
 void initSolarFox()
 {
@@ -22,8 +22,11 @@ void closeSolarFox()
     // printf("[libSolarFox] SolarFox closing.\n");
 }
 
-extern "C" IGameModule *entryPoint()
+extern "C" arc::IGameModule *entryPoint()
 {
     // printf("[libSolarFox] entry point !\n");
     return new solarFox();
 }
+
+solarFox::~solarFox()
+{}

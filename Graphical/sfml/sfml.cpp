@@ -9,7 +9,7 @@
 
 extern "C" void initSfml() __attribute__ ((constructor));
 extern "C" void closeSfml() __attribute__ ((destructor));
-extern "C" IDisplayModule *entryPoint();
+extern "C" arc::IDisplayModule *entryPoint();
 
 // MANAGE LIBRAIRIE //
 
@@ -23,7 +23,7 @@ extern "C" void closeSfml()
     // printf("[sfml] sfml closing.\n");
 }
 
-extern "C" IDisplayModule *entryPoint()
+extern "C" arc::IDisplayModule *entryPoint()
 {
     // printf("[sfml] entry point !\n");
     return new sfml();
@@ -139,7 +139,7 @@ void sfml::display_text(std::string text, int x, int y)
 // EVENT //
 
 
-IDisplayModule::Input sfml::handle_key()
+arc::Input sfml::handle_key()
 {
     _window.display();
         while (this->_window.pollEvent(_event))
@@ -149,19 +149,19 @@ IDisplayModule::Input sfml::handle_key()
                 exit (0);
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
-                return IDisplayModule::Input::SPACE;
+                return arc::Input::SPACE;
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::G) {
-                return IDisplayModule::Input::nextLib;
+                return arc::Input::nextLib;
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num1) {
-                return IDisplayModule::Input::StartSnake;
+                return arc::Input::StartSnake;
             }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num2) {
-                return IDisplayModule::Input::StartSfox;
+                return arc::Input::StartSfox;
             }
         }
-    return IDisplayModule::NONE;
+    return arc::Input::NONE;
 }
 
 bool sfml::gameOver()

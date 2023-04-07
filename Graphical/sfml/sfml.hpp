@@ -12,8 +12,9 @@
 #include <SFML/Audio.hpp>
 #include "../include/IDisplayModule.hpp"
 #include "../../errorHandling/errorHandling.hpp"
+#include "../../utils/utils.hpp"
 
-class sfml : public IDisplayModule
+class sfml : public arc::IDisplayModule
 {
     public:
         sfml();
@@ -37,7 +38,7 @@ class sfml : public IDisplayModule
 
 
         //EVENT//
-        IDisplayModule::Input handle_key() override;
+        arc::Input handle_key() override;
         bool gameOver() override;
         bool isOpen() override;
 

@@ -39,10 +39,10 @@ void arcade(char *src)
 {
     // displayArcadeStart();
     // sleep(5);
-    DLloader <IGameModule> loaderGa;
-    DLloader <IDisplayModule> loaderGr;
-    IDisplayModule *graph;
-    IGameModule *game;
+    DLloader <arc::IGameModule> loaderGa;
+    DLloader <arc::IDisplayModule> loaderGr;
+    arc::IDisplayModule *graph;
+    arc::IGameModule *game;
     loaderGr.openLoader(src);
     graph = loaderGr.getInstance();
     board Board;
@@ -50,7 +50,7 @@ void arcade(char *src)
     while (1) {
         graph->init();
         key = graph->handle_key();
-        if (key == IDisplayModule::Input::nextLib) {
+        if (key == arc::Input::nextLib) {
             if (myStrCmp(graph->getName(), "sfml") == 0) {
                 delete graph;
                 loaderGr.closeLoader();
@@ -64,24 +64,24 @@ void arcade(char *src)
             }
             graph = loaderGr.getInstance();
         }
-        if (key == IDisplayModule::Input::StartSnake) {
+        if (key == arc::Input::StartSnake) {
             loaderGa.openLoader("lib/arcade_snake.so");
             game = loaderGa.getInstance();
             break;
         }
-        if (key == IDisplayModule::Input::StartSfox) {
+        if (key == arc::Input::StartSfox) {
             loaderGa.openLoader("lib/arcade_solarfox.so");
             game = loaderGa.getInstance();
             break;
         }
     }
+    if (myStrCmp(game->getName(), "Snake") == 0) 
+        Board.setBoardMap("Game/snake/map/snakeMap");
+    if (myStrCmp(game->getName(), "solarFox") == 0)
+        Board.setBoardMap("Game/solarFox/map/solarFoxMap");
+
     while (!game->gameOver()) {
-        if (myStrCmp(game->getName(), "Snake") == 0) {
-            Board.setBoardMap("Game/snake/map/snakeMap");
-        }
-        if (myStrCmp(game->getName(), "solarFox") == 0) {
-            Board.setBoardMap("Game/solarFox/map/solarFoxMap");
-        }
+        // Board.setBoard(game->update(graph->handle_key, Board.getBoardMap()));
         graph->display_board(Board.getBoardMap());
     }
 }

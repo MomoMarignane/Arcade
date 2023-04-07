@@ -9,7 +9,7 @@
 
 extern "C" void initNcurses() __attribute__((constructor));
 extern "C" void closeNcurses() __attribute__((destructor));
-extern "C" IDisplayModule *entryPoint();
+extern "C" arc::IDisplayModule *entryPoint();
 
 // // MANAGE LIBRAIRIE //
 
@@ -24,7 +24,7 @@ extern "C" void closeNcurses()
     // printf("[ncurses] ncurses closing.\n");
 }
 
-extern "C" IDisplayModule *entryPoint()
+extern "C" arc::IDisplayModule *entryPoint()
 {
     // printf("[ncurses] entry point !\n");
     return new ncurses();
@@ -138,28 +138,28 @@ void ncurses::display_text(std::string text, int x, int y)
 
 // EVENT //
 
-ncurses::IDisplayModule::Input ncurses::handle_key()
+arc::Input ncurses::handle_key()
 {
     int c = getch();
     if (c == KEY_UP)
-        return IDisplayModule::Input::UP;
+        return arc::Input::UP;
     if (c == KEY_DOWN)
-        return IDisplayModule::Input::DOWN;
+        return arc::Input::DOWN;
     if (c == KEY_LEFT)
-        return IDisplayModule::Input::LEFT;
+        return arc::Input::LEFT;
     if (c == KEY_RIGHT)
-        return IDisplayModule::Input::RIGHT;
+        return arc::Input::RIGHT;
     if (c == 10)
-        return IDisplayModule::Input::ENTER;
+        return arc::Input::ENTER;
     if (c == 32)
-        return IDisplayModule::Input::SPACE;
+        return arc::Input::SPACE;
     if (c == 49 || c == '&')
-        return IDisplayModule::Input::StartSnake;
+        return arc::Input::StartSnake;
     if (c == 50 || c == 'é')
-        return IDisplayModule::Input::StartSfox;
+        return arc::Input::StartSfox;
     if (c == 'g')
-        return IDisplayModule::Input::nextLib;
-    return ncurses::IDisplayModule::NONE;
+        return arc::Input::nextLib;
+    return arc::NONE;
 }
 
 bool ncurses::gameOver()

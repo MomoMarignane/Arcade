@@ -17,6 +17,11 @@ board::~board()
     this->boardMap.clear();
 }
 
+void board::setBoard(board myBoard)
+{
+    this->boardMap = myBoard.boardMap;
+}
+
 void board::setBoardMap(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open())

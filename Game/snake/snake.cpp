@@ -10,7 +10,7 @@
 
 void initSnake() __attribute__((constructor));
 void closeSnake() __attribute__((destructor));
-extern "C" IGameModule *entryPoint();
+extern "C" arc::IGameModule *entryPoint();
 
 void initSnake()
 {
@@ -22,7 +22,7 @@ void closeSnake()
     // printf("[libSnake] Snake closing.\n");
 }
 
-extern "C" IGameModule *entryPoint()
+extern "C" arc::IGameModule *entryPoint()
 {
     // printf("[libSnake] entry point !\n");
     return new snake();
@@ -109,4 +109,8 @@ bool snake::gameOver()
     if (!this->collision())
         return false;
     return true;
+}
+
+std::vector<std::string> snake::update(arc::Input key, std::vector<std::string> board)
+{
 }
