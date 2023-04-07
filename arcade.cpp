@@ -76,13 +76,13 @@ void arcade(char *src)
         }
     }
     if (myStrCmp(game->getName(), "Snake") == 0) 
-        Board.setBoardMap("Game/snake/map/snakeMap");
+            Board.setBoardMap("Game/snake/map/snakeMap");
     if (myStrCmp(game->getName(), "solarFox") == 0)
-        Board.setBoardMap("Game/solarFox/map/solarFoxMap");
+            Board.setBoardMap("Game/solarFox/map/solarFoxMap");
 
     while (!game->gameOver()) {
-        // Board.setBoard(game->update(graph->handle_key, Board.getBoardMap()));
         graph->display_board(Board.getBoardMap());
+        // Board.setBoard(game->update(graph->handle_key(), Board.getBoardMap()));
     }
 }
 

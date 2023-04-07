@@ -17,9 +17,9 @@ board::~board()
     this->boardMap.clear();
 }
 
-void board::setBoard(board myBoard)
+void board::setBoard(std::vector<std::string> myBoard)
 {
-    this->boardMap = myBoard.boardMap;
+    this->boardMap = myBoard;
 }
 
 void board::setBoardMap(const std::string& filename) {

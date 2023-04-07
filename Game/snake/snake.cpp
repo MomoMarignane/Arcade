@@ -113,4 +113,8 @@ bool snake::gameOver()
 
 std::vector<std::string> snake::update(arc::Input key, std::vector<std::string> board)
 {
+    if (key == arc::Input::UP) {
+        snake::move('u');
+    }
+    return board;
 }

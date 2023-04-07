@@ -17,7 +17,7 @@ class board
     public:
         board();
         ~board();
-        void setBoard(board myBoard);
+        void setBoard(std::vector<std::string> myBoard);
         void setBoardMap(const std::string& filename);
         void updateBoard() {};
         std::vector<std::string> getBoardMap();
