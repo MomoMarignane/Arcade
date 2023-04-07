@@ -38,9 +38,11 @@ int check_lib()
 
 sfml::sfml()
 {
-    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Resize | sf::Style::Close);
+    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Close);
     this->_window.setFramerateLimit(60);
     this->_window.setKeyRepeatEnabled(true);
+    // this->_music.setLoop(false);
+    // this->_music.stop();
     if (check_lib() > 0)
         std::cout << "Load SFML librairie : failed" << std::endl;
 }
@@ -64,23 +66,33 @@ void sfml::init()
     float spritePosY = windowMidY - spriteMidY;
 
 
-    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png")) {
+    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") 
+    || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png") || !this->_bgText.loadFromFile("Graphical/assets/backBGmenu.jpg")) {
         std::cerr << "Erreur load sprite" << std::endl;
         exit(84);
     }
+
     this->_window.clear();
+    // this->_music.setVolume(100);
+    // this->_music.setLoop(true);
+    // this->_music.play();
+    // if (this->_music.getStatus() != sf::SoundSource::Status::Playing) {
+    //     exit(84);
+    // }
     // SET BG menu
+    this->_menuBgSprite.setTexture(this->_bgText);
+    this->_window.draw(this->_menuBgSprite);
     sf::Vector2i vector = {sfml::getSizeWindowX(), sfml::getSizeWindowY()};
     this->_sprite.setTexture(this->_texture);
     this->_sprite.setPosition(spritePosX, spritePosY);
     this->_window.draw(this->_sprite);
     //SET SNAKE BUTTON
     this->_SsnakeB.setTexture(this->_TSnakeB);
-    this->_SsnakeB.setPosition(67, 325);
+    this->_SsnakeB.setPosition(720, 350);
     this->_window.draw(this->_SsnakeB);
     //SET SOLARFOX BUTTON
     this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
-    this->_SsolarFoxB.setPosition(950, 325);
+    this->_SsolarFoxB.setPosition(980, 350);
     this->_window.draw(this->_SsolarFoxB);
 }
 

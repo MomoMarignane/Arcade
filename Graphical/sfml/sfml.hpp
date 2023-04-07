@@ -14,6 +14,7 @@
 #include "../../errorHandling/errorHandling.hpp"
 #include "../../utils/utils.hpp"
 
+
 class sfml : public arc::IDisplayModule
 {
     public:
@@ -53,6 +54,9 @@ class sfml : public arc::IDisplayModule
         //MENU BG
         sf::Texture _texture;
         sf::Sprite _sprite;
+        sf::Texture _bgText;
+        sf::Sprite _menuBgSprite;
+        // sf::Music _music;
         //BOUTON
         sf::Event _clickButton;
         sf::Texture _TsolarFoxB;
