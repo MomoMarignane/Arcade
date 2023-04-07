@@ -19,11 +19,10 @@ class solarFox : public IGameModule
         solarFox() {};
         ~solarFox() {};
         void init() override {
-            printf("__________\nSolarFOX\n_________\n");
         };
         void stop() override {};
         const std::string& getName() const override {
-            static const std::string name = "Qix";
+            static const std::string name = "solarFox";
             return name;
         };
         virtual bool gameOver() override {return false;};

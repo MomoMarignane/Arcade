@@ -122,14 +122,11 @@ void ncurses::stop()
 // //DISPLAY//
 
 
-void ncurses::display_board(std::vector<std::string> board)
+void ncurses::display_board(std::vector<std::string> boardGame)
 {
-    clear();
-    for (size_t i = 0; i < board.size(); i++) {
-        for (size_t j = 0; j < board[i].size(); j++) {
-            char ptr = board[i][j];
-            mvaddch(i, j, ptr);
-        }
+    erase();
+    for (int i = 0; i < boardGame.size(); i++) {
+        mvprintw((i + 7), 30, boardGame[i].c_str());
     }
     refresh();
 }
@@ -158,12 +155,10 @@ ncurses::IDisplayModule::Input ncurses::handle_key()
         return IDisplayModule::Input::SPACE;
     if (c == 49 || c == '&')
         return IDisplayModule::Input::StartSnake;
-    // if (c == EOF) {
-    //     endwin();
-    //     exit(0);
-    // }
-
-
+    if (c == 50 || c == 'é')
+        return IDisplayModule::Input::StartSfox;
+    if (c == 'g')
+        return IDisplayModule::Input::nextLib;
     return ncurses::IDisplayModule::NONE;
 }
 

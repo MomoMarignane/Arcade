@@ -54,8 +54,16 @@ sfml::~sfml()
 
 void sfml::init()
 {
-    sf::Color darkColor(100, 100, 100, 255);
-    bool isDark = false;
+    sf::Vector2u windowSize = this->_window.getSize();
+    sf::FloatRect spriteBounds = this->_sprite.getLocalBounds();
+    float windowMidX = windowSize.x / 2.0f;
+    float windowMidY = windowSize.y / 2.0f;
+    float spriteMidX = spriteBounds.width / 2.0f;
+    float spriteMidY = spriteBounds.height / 2.0f;
+    float spritePosX = windowMidX - spriteMidX;
+    float spritePosY = windowMidY - spriteMidY;
+
+
     if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png")) {
         std::cerr << "Erreur load sprite" << std::endl;
         exit(84);
@@ -64,15 +72,15 @@ void sfml::init()
     // SET BG menu
     sf::Vector2i vector = {sfml::getSizeWindowX(), sfml::getSizeWindowY()};
     this->_sprite.setTexture(this->_texture);
-    this->_sprite.setPosition(100, 0);
+    this->_sprite.setPosition(spritePosX, spritePosY);
     this->_window.draw(this->_sprite);
     //SET SNAKE BUTTON
     this->_SsnakeB.setTexture(this->_TSnakeB);
-    this->_SsnakeB.setPosition(sfml::getSizeWindowX() / 2.5, sfml::getSizeWindowY() / 3);
+    this->_SsnakeB.setPosition(67, 325);
     this->_window.draw(this->_SsnakeB);
     //SET SOLARFOX BUTTON
     this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
-    this->_SsolarFoxB.setPosition(sfml::getSizeWindowX() / 1.82, sfml::getSizeWindowY() / 3);
+    this->_SsolarFoxB.setPosition(950, 325);
     this->_window.draw(this->_SsolarFoxB);
 }
 
@@ -143,8 +151,14 @@ IDisplayModule::Input sfml::handle_key()
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
                 return IDisplayModule::Input::SPACE;
             }
+            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::G) {
+                return IDisplayModule::Input::nextLib;
+            }
             if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num1) {
                 return IDisplayModule::Input::StartSnake;
+            }
+            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num2) {
+                return IDisplayModule::Input::StartSfox;
             }
         }
     return IDisplayModule::NONE;

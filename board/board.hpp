@@ -17,13 +17,9 @@ class board
     public:
         board();
         ~board();
-        void setBoardMapSnake(const std::string& filename);
-        void setBoardMapSfox(const std::string& filename);
-        void updateSnake() {};
-        void updateSfox() {};
-        std::vector<std::string> getBoardMapSnake();
-        std::vector<std::string> getBoardMapSfox();
+        void setBoardMap(const std::string& filename);
+        void updateBoard() {};
+        std::vector<std::string> getBoardMap();
     protected:
-        std::vector<std::string> boardMapSnake;
-        std::vector<std::string> boardMapSfox;
+        std::vector<std::string> boardMap;
 };

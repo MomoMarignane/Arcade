@@ -45,32 +45,44 @@ void arcade(char *src)
     IGameModule *game;
     loaderGr.openLoader(src);
     graph = loaderGr.getInstance();
-    // board solarBoard;
-    // solarBoard.setBoardMap("Game/snake/map/snakeMap");
-    board snakeBoard;
-    snakeBoard.setBoardMapSnake("Game/snake/map/snakeMap");
+    board Board;
     int key = 0;
     while (1) {
         graph->init();
         key = graph->handle_key();
-        if (key == IDisplayModule::Input::SPACE) {
+        if (key == IDisplayModule::Input::nextLib) {
             if (myStrCmp(graph->getName(), "sfml") == 0) {
                 delete graph;
                 loaderGr.closeLoader();
-                loaderGr.openLoader("lib/ncurses.so");
+                loaderGr.openLoader("lib/arcade_ncurses.so");
             } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                delete graph;
                 loaderGr.closeLoader();
-                loaderGr.openLoader("lib/sfml.so");
+                loaderGr.openLoader("lib/arcade_sfml.so");
             } else {
                 Error::err_("Library not founding");
             }
             graph = loaderGr.getInstance();
         }
         if (key == IDisplayModule::Input::StartSnake) {
-            loaderGa.openLoader("libGame/snake.so");
+            loaderGa.openLoader("lib/arcade_snake.so");
             game = loaderGa.getInstance();
-            exit(15);
+            break;
         }
+        if (key == IDisplayModule::Input::StartSfox) {
+            loaderGa.openLoader("lib/arcade_solarfox.so");
+            game = loaderGa.getInstance();
+            break;
+        }
+    }
+    while (!game->gameOver()) {
+        if (myStrCmp(game->getName(), "Snake") == 0) {
+            Board.setBoardMap("Game/snake/map/snakeMap");
+        }
+        if (myStrCmp(game->getName(), "solarFox") == 0) {
+            Board.setBoardMap("Game/solarFox/map/solarFoxMap");
+        }
+        graph->display_board(Board.getBoardMap());
     }
 }
 

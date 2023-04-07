@@ -1,12 +1,13 @@
 /*
- EPITECH PROJECT, 2022
- Arcade
- File description:
- lib.hpp
+EPITECH PROJECT, 2022
+Arcade
+File description:
+lib.hpp
 */
 
 #pragma once
 #include <iostream>
+#include <string>
 #include <vector>
 #include <stdio.h>
 #include <dlfcn.h>
@@ -81,7 +82,7 @@ class snake : public IGameModule
         int _life;
         int _score;
         std::vector<int> _lifeMob;
-        std::vector<int> _map1;
-        std::vector<int> _map2;
-        std::vector<int> _map3;
+        std::vector<std::string> _map1;
+        std::vector<std::string> _map2;
+        std::vector<std::string> _map3;
 };
