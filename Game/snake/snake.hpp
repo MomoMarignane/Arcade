@@ -16,8 +16,22 @@ lib.hpp
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include "../../board/board.hpp"
 #include "../include/IGameModule.hpp"
 #include "../../utils/utils.hpp"
+
+#define SnakeHead "assets/snakeHeadUp.png"
+#define SnakeHeadUp "assets/snakeHeadUp.png"
+#define SnakeHeadRight "assets/snakeHeadRight.png"
+#define SnakeHeadLeft "assets/snakeHeadLeft.png"
+#define SnakeHeadDown "assets/snakeHeadDown.png"
+#define SnakeBody "assets/snakeBody.png"
+#define SnakeBG "assets/snakeBG.png"
+#define SnakeWall "assets/snakeWall.png"
+#define SnakeFood1 "assets/snakeFood1.png"
+#define SnakeFood2 "assets/snakeFood2.png"
+#define SnakeFood3 "assets/snakeFood3.png"
+
 
 extern "C" {
     void initSnake();
@@ -33,58 +47,42 @@ const int WIDTH = 20;
     {
         public:
             snake() {
-            body = {{10, 10}, {10, 9}, {10, 8}}; // tête, corps, queue
-            direction = 'r'; // direction initiale
+                this->gameOver_ = false;
             };
             ~snake() {};
-
-            void init() override;
-
+            void char_to_object(board *board, char ptrChar, int x, int y);
+            void init(board *board) override;
             void stop() override {
                 exit(0);
             };
-
             virtual bool gameOver() override;
 
             const std::string& getName() const override {
                 static const std::string name = "Snake";
                 return name;
             };
-
-            struct playerPos
-            {
-                int xPos;
-                int yPos;
-            };
-
             char direction; // la direction dans laquelle le serpent se déplace
+            void grow() {};
+            bool ate(std::vector<std::string> food) const {};
+            void collision();
 
-            void move(char dir);
-
-            void grow();
-
-            const std::vector<playerPos>& getBody() const {
-                return body;
-            }
-
-            bool ate(playerPos food) const;
-
-            bool collision() const;
-
-            playerPos generateFood()
+            std::vector<std::string> generateFood(std::vector<std::string> board)
             {
                 int x = rand() % (WIDTH - 1) + 1;
                 int y = rand() % (HEIGHT - 1) + 1;
-                return {x, y};
+                return board;
             }
-
-            std::vector<playerPos> body; // le corps du serpent
-            std::vector<std::string> update(arc::Input, std::vector<std::string>) override;
-        protected:
+            void moveUp(board*);
+            void moveRight(board*);
+            void moveDown(board*);
+            void moveLeft(board*);
+            void update(arc::Input, board*) override;
+            void deleteTail(board*, int, int);
+        // protected:
             int _life;
             int _score;
+            int xPos;
+            int yPos;
+            bool gameOver_;
             std::vector<int> _lifeMob;
-            std::vector<std::string> _map1;
-            std::vector<std::string> _map2;
-            std::vector<std::string> _map3;
     };

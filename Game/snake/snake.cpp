@@ -28,93 +28,197 @@ extern "C" arc::IGameModule *entryPoint()
     return new snake();
 }
 
-void snake::init()
+void snake::char_to_object(board *board, char ptrChar, int x, int y)
 {
+    if (ptrChar == 'O') {
+        board->_Object.push_back(arc::Obj("SnakeHeadUp", SnakeHeadUp, x, y));
+    }
+    if (ptrChar == 'R') {
+        board->_Object.push_back(arc::Obj("SnakeHeadRight", SnakeHeadRight, x, y));
+    }
+    if (ptrChar == 'L') {
+        board->_Object.push_back(arc::Obj("SnakeHeadLeft", SnakeHeadLeft, x, y));
+    }
+    if (ptrChar == 'D') {
+        board->_Object.push_back(arc::Obj("SnakeHeadDown", SnakeHeadDown, x, y));
+    }
+    if (ptrChar == 'o') {
+        board->_Object.push_back(arc::Obj("SnakeBody", SnakeBody, x, y));
+    }
+    if (ptrChar == ' ') {
+        board->_Object.push_back(arc::Obj("SnakeBG", SnakeBG, x, y));
+    }
+    if (ptrChar == '#') {
+        board->_Object.push_back(arc::Obj("SnakeWall", SnakeWall, x, y));
+    }
+    if (ptrChar == '+') {
+        board->_Object.push_back(arc::Obj("SnakeFood1", SnakeFood1, x, y));
+    }
+    if (ptrChar == '-') {
+        board->_Object.push_back(arc::Obj("SnakeFood2", SnakeFood2, x, y));
+    }
+    if (ptrChar == '*') {
+        board->_Object.push_back(arc::Obj("SnakeFood3", SnakeFood3, x, y));
+    }
+
+}
+
+void snake::init(board *board)
+{
+    // RAPH //
+    char ptrChar;
+    int pos_x = 0;
+    int pos_y = 0;
+    
+    board->_Object.clear();
+    for (int i = 0; i < board->boardMap.size(); i++) {
+        pos_x = 0;
+        for (int j = 0; j < (board->boardMap[i].size() + 2); j++) {
+            ptrChar = board->boardMap[i][j];
+            char_to_object(board, ptrChar, pos_x, pos_y);
+            pos_x += 50;
+        }
+        pos_y += 50;
+    }
+    // - - - //
     _life = 3;
     _score = 0;
     for (int i = 0; i < 5; i += 1)
         _lifeMob.push_back(2);
-    playerPos player;
-    player.xPos = 0;
-    printf("initied\nSNAKE\n__\n");
-}
-
-void snake::move(char dir)
-{
-    // mise à jour de la direction
-    if ((dir == 'u' && direction != 'd') ||
-        (dir == 'd' && direction != 'u') ||
-        (dir == 'l' && direction != 'r') ||
-        (dir == 'r' && direction != 'l')) {
-        direction = dir;
-    }
-    // déplacement de la tête
-    playerPos head = body[0];
-    switch (direction) {
-        case 'u':
-            head.yPos--;
-            break;
-        case 'd':
-            head.yPos++;
-            break;
-        case 'l':
-            head.xPos--;
-            break;
-        case 'r':
-            head.xPos++;
-            break;
-    }
-        // ajout de la nouvelle tête
-    body.insert(body.begin(), head);
-
-        // suppression de la queue
-    body.pop_back();
-}
-
-void snake::grow()
-{
-    playerPos tail = body.back();
-    body.push_back(tail);
-}
-
-bool snake::ate(playerPos food) const
-{
-    return body[0].xPos == food.xPos && body[0].yPos == food.yPos;
-}
-
-bool snake::collision() const {
-    const playerPos head = body[0];
-    // vérification si le serpent a touché les murs
-    if (head.xPos < 1 || head.xPos > WIDTH || head.xPos < 1 || head.yPos > HEIGHT || head.yPos < 1) {
-        return true;
-        }
-    // vérification si le serpent a touché sa queue
-    for (unsigned long int i = 1; i < body.size(); i++) {
-        if (head.xPos == body[i].xPos && head.yPos == body[i].yPos) {
-            return true;
-            }
-    // vérification si le serpent a touché sa queue
-    for (unsigned long int i = 1; i < body.size(); i++) {
-        if (head.xPos == body[i].xPos && head.yPos == body[i].yPos) {
-            return true;
-            }
-        }
-        return false;
-    }
-    return true;
+    xPos = 10;
+    yPos = 6;
+    // printf("initied\nSNAKE\n__\n");
 }
 
 bool snake::gameOver()
 {
-    if (!this->collision())
-        return false;
-    return true;
+    return this->gameOver_;
 }
 
-std::vector<std::string> snake::update(arc::Input key, std::vector<std::string> board)
+void snake::deleteTail(board* board, int x, int y)
 {
-    if (key == arc::Input::UP) {
-        snake::move('u');
+    int r = 0, l = 0, u = 0, d = 0;
+    bool tail = false;
+    while (!tail) {
+        if (board->boardMap[x][y+1] == 'o' && l == 0) {
+            r += 1;
+            y += 1;
+        } else if (board->boardMap[x][y-1] == 'o' && r == 0) {
+            l += 1;
+            y -= 1;
+        } else if (board->boardMap[x+1][y] == 'o' && u == 0) {
+            d += 1;
+            x += 1;
+        } else if (board->boardMap[x-1][y] == 'o' && d == 0) {
+            u += 1;
+            x -= 1;
+        } else {
+            tail = true;
+        }
     }
-    return board;
+    board->boardMap[x][y] = ' ';
+}
+
+void snake::collision()
+{
+    this->gameOver_ = true;
+}
+
+void snake::moveUp(board* board)
+{
+    for (int i = 0; i < board->boardMap.size(); i += 1)
+        for (int j = 0; j < board->boardMap[i].size(); j += 1) {
+            if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
+                this->xPos = i;
+                this->yPos = j;
+            }
+        }
+    if (board->boardMap[this->xPos-1][this->yPos] == 'o') {
+        this->collision();        
+    } else {
+        board->boardMap[this->xPos][this->yPos] = 'o';
+        board->boardMap[this->xPos-1][this->yPos] = 'O';
+        this->deleteTail(board, this->xPos, this->yPos);
+    }
+}
+
+void snake::moveRight(board* board)
+{
+    for (int i = 0; i < board->boardMap.size(); i += 1)
+        for (int j = 0; j < board->boardMap[i].size(); j += 1) {
+            if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
+                this->xPos = i;
+                this->yPos = j;
+            }
+        }
+    if (board->boardMap[this->xPos][this->yPos+1] == 'o') {
+        this->collision();
+    } else {
+        board->boardMap[this->xPos][this->yPos] = 'o';
+        board->boardMap[this->xPos][this->yPos+1] = 'R';
+        this->deleteTail(board, this->xPos, this->yPos);
+    }
+}
+
+void snake::moveLeft(board* board)
+{
+    for (int i = 0; i < board->boardMap.size(); i += 1)
+        for (int j = 0; j < board->boardMap[i].size(); j += 1) {
+            if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
+                this->xPos = i;
+                this->yPos = j;
+            }
+        }
+    if (board->boardMap[this->xPos][this->yPos-1] == 'o') {
+        this->collision();
+    } else {
+        board->boardMap[this->xPos][this->yPos] = 'o';
+        board->boardMap[this->xPos][this->yPos-1] = 'L';
+        this->deleteTail(board, this->xPos, this->yPos);
+    }
+}
+
+void snake::moveDown(board* board)
+{
+    for (int i = 0; i < board->boardMap.size(); i += 1)
+        for (int j = 0; j < board->boardMap[i].size(); j += 1) {
+            if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
+                this->xPos = i;
+                this->yPos = j;
+            }
+        }
+    if (board->boardMap[this->xPos+1][this->yPos] == 'o') {
+        this->collision();
+    } else {
+        board->boardMap[this->xPos][this->yPos] = 'o';
+        board->boardMap[this->xPos+1][this->yPos] = 'D';
+        this->deleteTail(board, this->xPos, this->yPos);
+    }
+}
+
+void snake::update(arc::Input key, board* board)
+{
+    if (key == arc::Input::UP)
+        this->moveUp(board);
+    if (key == arc::Input::RIGHT)
+        this->moveRight(board);
+    if (key == arc::Input::DOWN)
+        moveDown(board);
+    if (key == arc::Input::LEFT)
+        moveLeft(board);
+    board->_Object.clear();
+
+    char ptrChar;
+    int pos_x = 0;
+    int pos_y = 0;
+    
+    for (int i = 0; i < board->boardMap.size(); i++) {
+        pos_x = 0;
+        for (int j = 0; j < (board->boardMap[i].size() + 2); j++) {
+            ptrChar = board->boardMap[i][j];
+            char_to_object(board, ptrChar, pos_x, pos_y);
+            pos_x += 50;
+        }
+        pos_y += 50;
+    }
 }

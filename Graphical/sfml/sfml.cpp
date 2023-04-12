@@ -38,17 +38,23 @@ int check_lib()
 
 sfml::sfml()
 {
-    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Close);
+    this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Resize | sf::Style::Close);
     this->_window.setFramerateLimit(60);
     this->_window.setKeyRepeatEnabled(true);
-    // this->_music.setLoop(false);
-    // this->_music.stop();
+    if (!this->_font.loadFromFile("stocky.ttf")) {
+        std::cerr << "Failed to load font" << std::endl;
+    }
+    this->_score.setFont(this->_font);
+    this->_score.setCharacterSize(30);
+    this->_score.setFillColor(sf::Color::White);
     if (check_lib() > 0)
         std::cout << "Load SFML librairie : failed" << std::endl;
 }
 
 sfml::~sfml()
 {
+    sf::Listener::setGlobalVolume(0);
+    this->_music.stop();
     this->_window.close();
 }
 
@@ -66,19 +72,20 @@ void sfml::init()
     float spritePosY = windowMidY - spriteMidY;
 
 
-    if (!this->_texture.loadFromFile("Graphical/assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("Graphical/assets/snakeButton.png") 
-    || !this->_TsolarFoxB.loadFromFile("Graphical/assets/solarFoxButton.png") || !this->_bgText.loadFromFile("Graphical/assets/backBGmenu.jpg")) {
+    if (!this->_texture.loadFromFile("assets/arcadeMenu.png") || !this->_TSnakeB.loadFromFile("assets/snakeButton.png") 
+    || !this->_TsolarFoxB.loadFromFile("assets/solarFoxButton.png") || !this->_bgText.loadFromFile("assets/backBGmenu.jpg")) {
         std::cerr << "Erreur load sprite" << std::endl;
         exit(84);
     }
 
+    if (!this->_music.openFromFile("assets/arcadeZike.wav"))
+        std::cerr << "fail sound " << std::endl;
+
     this->_window.clear();
-    // this->_music.setVolume(100);
+    this->_music.setVolume(100);
     // this->_music.setLoop(true);
-    // this->_music.play();
-    // if (this->_music.getStatus() != sf::SoundSource::Status::Playing) {
-    //     exit(84);
-    // }
+    this->_music.play();
+
     // SET BG menu
     this->_menuBgSprite.setTexture(this->_bgText);
     this->_window.draw(this->_menuBgSprite);
@@ -88,17 +95,18 @@ void sfml::init()
     this->_window.draw(this->_sprite);
     //SET SNAKE BUTTON
     this->_SsnakeB.setTexture(this->_TSnakeB);
-    this->_SsnakeB.setPosition(720, 350);
+    this->_SsnakeB.setPosition(690, 420);
     this->_window.draw(this->_SsnakeB);
     //SET SOLARFOX BUTTON
     this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
-    this->_SsolarFoxB.setPosition(980, 350);
+    this->_SsolarFoxB.setPosition(950, 420);
     this->_window.draw(this->_SsolarFoxB);
 }
 
 void sfml::update()
 {
-    _window.display();
+    this->_window.draw(this->_score);
+    this->_window.display();
 }
 
 void sfml::stop()
@@ -106,41 +114,38 @@ void sfml::stop()
     this->_window.clear(sf::Color::Black);
 }
 // DISPLAY //
-sf::Sprite sfml::char_to_sprite(char c)
+
+void sfml::display_object(arc::Obj Obj)
 {
-    switch (c) {
-        case '*':
-            this->_texture.loadFromFile("sprite_a.png");
-            this->_sprite.setTexture(_texture);
-            this->_window.draw(_sprite);
-            //WALL//
-            break;
-        case 'o':
-            //SNAKE BODY//
-            break;
-        case 'O':
-            //SNAKE HEAD//
-            break;
-        case '+':
-            //SNAKE FOOD//
-            break;
-        case ' ':
-            //BG //
-            break;
-        default:
-            Error::err_("Invalid map");
-            break;
+    sf::Texture actualText;
+    sf::Sprite actualSprite;
+
+    if (!actualText.loadFromFile(Obj._path)) {
+        Error::err_("Erreur load sprite");
     }
+    
+    actualSprite.setTexture(actualText);
+    actualSprite.setPosition(Obj.x, Obj.y);
+    this->_window.draw(actualSprite);
+    // this->_window.display();
 }
 
-void sfml::display_board(std::vector<std::string> board)
+void sfml::display_board(board *board)
 {
-    for (size_t i = 0; i < board.size(); i++) {
-        for (size_t j = 0; j < board[i].size(); j++) {
-            char ptrChar = board[i][j];
-            char_to_sprite(ptrChar);
-        }
+    sf::Listener::setGlobalVolume(0);
+    int pos_x = 0;
+    int pos_y = 0;
+    this->_window.clear();
+    //SCORE//
+    this->_score.setPosition(10, 10);
+    board->score = "1000";
+    this->_score.setString("Score :" + board->score);
+    //    //
+    for (size_t i = 0; i < board->_Object.size(); i++) {
+        display_object(board->_Object[i]);
     }
+    // this->_window.display();
+    // display_object(board->_Object[1]);
 }
 
 void sfml::display_text(std::string text, int x, int y)
@@ -153,32 +158,57 @@ void sfml::display_text(std::string text, int x, int y)
 
 arc::Input sfml::handle_key()
 {
-    _window.display();
+    this->_window.display();
         while (this->_window.pollEvent(_event))
         {
+            sf::sleep(sf::milliseconds(150));
             if (_event.type == sf::Event::Closed) {
                 this->_window.close();
                 exit (0);
             }
-            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Space) {
+            if (this->_event.key.code == sf::Keyboard::Up) {
+                this->prviousValue = arc::Input::UP;
+                return arc::Input::UP;
+            }
+            if (this->_event.key.code == sf::Keyboard::Down) {
+                this->prviousValue = arc::Input::DOWN;
+                return arc::Input::DOWN;
+            }
+            if (this->_event.key.code == sf::Keyboard::Left) {
+                this->prviousValue = arc::Input::LEFT;
+                return arc::Input::LEFT;
+            }
+            if (this->_event.key.code == sf::Keyboard::Right) {
+                this->prviousValue = arc::Input::RIGHT;
+                return arc::Input::RIGHT;
+            }
+            if (this->_event.key.code == sf::Keyboard::Enter) {
+                this->prviousValue = arc::Input::ENTER;
+                return arc::Input::ENTER;
+            }
+            if (this->_event.key.code == sf::Keyboard::Space) {
+                this->prviousValue = arc::Input::SPACE;
                 return arc::Input::SPACE;
             }
-            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::G) {
-                return arc::Input::nextLib;
-            }
-            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num1) {
+            if (this->_event.key.code == sf::Keyboard::Num1 || this->_event.key.code == sf::Keyboard::Quote) {
+                this->prviousValue = arc::Input::StartSnake;
                 return arc::Input::StartSnake;
             }
-            if (_event.type == sf::Event::KeyPressed && _event.key.code == sf::Keyboard::Num2) {
+            if (this->_event.key.code == sf::Keyboard::Num2) {
+                this->prviousValue = arc::Input::StartSfox;
                 return arc::Input::StartSfox;
             }
+            if (this->_event.key.code == sf::Keyboard::G) {
+                this->prviousValue = arc::Input::nextLib;
+                return arc::Input::nextLib;
+            }
         }
-    return arc::Input::NONE;
+    return this->prviousValue;
 }
 
 bool sfml::gameOver()
 {
-    return false;
+    return true;
 }
 
 bool sfml::isOpen()

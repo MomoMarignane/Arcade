@@ -8,13 +8,11 @@
 
 #include <unistd.h>
 #include <stdio.h>
-#include "utils/utils.hpp"
 #include "DLloader/DLloader.hpp"
 #include "Core/include/Core.hpp"
 #include "Game/include/IGameModule.hpp"
 #include "Graphical/include/IDisplayModule.hpp"
 #include "errorHandling/errorHandling.hpp"
-#include "board/board.hpp"
 
 void displayArcadeStart()
 {
@@ -29,16 +27,16 @@ void displayArcadeStart()
     std::cout << "︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼︼ " << std::endl;
     std::cout << "˃ Starting [ARCADE]" << std::endl;
     std::cout << "      Make by :" << std::endl;
-    std::cout << "          ➫ Mohamed Mansour" << std::endl;
-    std::cout << "          ➬ Raphael de Monchy" << std::endl;
-    std::cout << "          ➩ Noah Yekken" << std::endl;
+    std::cout << "          ➫ Project Leader / Architecture     : Mohamed Mansour" << std::endl;
+    std::cout << "          ➬ Game designer / Graphics designer : Raphael de Monchy" << std::endl;
+    std::cout << "          ➩ Game designer / Redaction         : Noah Yekken" << std::endl;
 
 }
 
 void arcade(char *src)
 {
     // displayArcadeStart();
-    // sleep(5);
+    // sleep(4);
     DLloader <arc::IGameModule> loaderGa;
     DLloader <arc::IDisplayModule> loaderGr;
     arc::IDisplayModule *graph;
@@ -51,7 +49,8 @@ void arcade(char *src)
         graph->init();
         key = graph->handle_key();
         if (key == arc::Input::nextLib) {
-            if (myStrCmp(graph->getName(), "sfml") == 0) {
+            
+            if (myStrCmp(graph->getName(), "sdl2") == 0) {
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_ncurses.so");
@@ -59,6 +58,10 @@ void arcade(char *src)
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_sfml.so");
+            } else if (myStrCmp(graph->getName(), "sfml") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/arcade_sdl2.so");
             } else {
                 Error::err_("Library not founding");
             }
@@ -80,9 +83,34 @@ void arcade(char *src)
     if (myStrCmp(game->getName(), "solarFox") == 0)
             Board.setBoardMap("Game/solarFox/map/solarFoxMap");
 
+    arc::Input g = arc::Input::UP;
+    game->init(&Board);
+
+    
     while (!game->gameOver()) {
-        graph->display_board(Board.getBoardMap());
-        // Board.setBoard(game->update(graph->handle_key(), Board.getBoardMap()));
+        graph->display_board(&Board);
+        g = graph->handle_key();
+        if (g == arc::Input::nextLib) {
+            if (myStrCmp(graph->getName(), "sdl2") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/arcade_ncurses.so");
+            } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/arcade_sfml.so");
+            } else if (myStrCmp(graph->getName(), "sfml") == 0) {
+                delete graph;
+                loaderGr.closeLoader();
+                loaderGr.openLoader("lib/arcade_sdl2.so");
+            } else {
+                Error::err_("Library not founding");
+            }
+            graph = loaderGr.getInstance();
+        } else {
+            game->update(g, &Board);
+            graph->update();
+        }
     }
 }
 

@@ -10,6 +10,7 @@
 #include <map>
 #include <vector>
 #include "../../utils/utils.hpp"
+#include "../../board/board.hpp"
 
 namespace arc {
 
@@ -26,7 +27,7 @@ namespace arc {
             virtual void update() = 0;
 
             //DISPLAY//
-            virtual void display_board(std::vector<std::string> board) = 0;
+            virtual void display_board(board *board) = 0;
             virtual void display_text(std::string text, int x, int y) = 0;
 
             //EVENT//

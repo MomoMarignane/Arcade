@@ -5,12 +5,13 @@
 ** board.hpp
 */
 
+#pragma once
 #include <map>
 #include <vector>
 #include <fstream>
 #include <iostream>
 #include <string>
-// #pragma once
+#include "../utils/utils.hpp"
 
 class board
 {
@@ -21,6 +22,10 @@ class board
         void setBoardMap(const std::string& filename);
         void updateBoard() {};
         std::vector<std::string> getBoardMap();
-    protected:
         std::vector<std::string> boardMap;
+        std::vector<arc::Obj> _Object;
+
+        std::string score;
+
+    // protected:
 };

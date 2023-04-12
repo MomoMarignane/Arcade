@@ -35,12 +35,12 @@ extern "C" arc::IDisplayModule *entryPoint()
 ncurses::ncurses()
 {
     initscr();
-    noecho();
     nodelay(stdscr, true);
+    noecho();
     keypad(stdscr, true);
     this->is_Open = true;
     curs_set(0);
-
+    this->prviousValue = arc::Input::UP;
     init_color();
 }
 
@@ -105,8 +105,6 @@ void ncurses::init()
     mvprintw(titleY + 7, titleX, "#                                  #");
     mvprintw(titleY + 8, titleX, "\\##################################/");
     mvprintw(titleY + 9, titleX, "=[MENU]=>==>==>==>==>==>==>==>==>=>=");
-
-
 }
 
 void ncurses::update()
@@ -117,16 +115,23 @@ void ncurses::update()
 void ncurses::stop()
 {
     wclear(stdscr);
+    exit(0);
 }
 
 // //DISPLAY//
 
 
-void ncurses::display_board(std::vector<std::string> boardGame)
+void ncurses::display_board(board* Game)
 {
     erase();
-    for (int i = 0; i < boardGame.size(); i++) {
-        mvprintw((i + 7), 30, boardGame[i].c_str());
+    for (int i = 0; i < Game->boardMap.size(); i += 1) {
+        for (int j = 0; j < Game->boardMap[j].size(); j += 1)
+            if (Game->boardMap[i][j] == 'R' || Game->boardMap[i][j] == 'D' || Game->boardMap[i][j] == 'L')
+                Game->boardMap[i][j] = 'O';
+    }
+    for (int i = 0; const auto &j: Game->boardMap) {
+        mvprintw(i, 30, j.c_str());
+        i += 1;
     }
     refresh();
 }
@@ -141,25 +146,44 @@ void ncurses::display_text(std::string text, int x, int y)
 arc::Input ncurses::handle_key()
 {
     int c = getch();
-    if (c == KEY_UP)
+    napms(150);
+    if (c == KEY_UP) {
+        this->prviousValue = arc::Input::UP;
         return arc::Input::UP;
-    if (c == KEY_DOWN)
+    }
+    if (c == KEY_DOWN) {
+        this->prviousValue = arc::Input::DOWN;
         return arc::Input::DOWN;
-    if (c == KEY_LEFT)
+    }
+    if (c == KEY_LEFT) {
+        this->prviousValue = arc::Input::LEFT;
         return arc::Input::LEFT;
-    if (c == KEY_RIGHT)
+    }
+    if (c == KEY_RIGHT) {
+        this->prviousValue = arc::Input::RIGHT;
         return arc::Input::RIGHT;
-    if (c == 10)
+    }
+    if (c == 10) {
+        this->prviousValue = arc::Input::ENTER;
         return arc::Input::ENTER;
-    if (c == 32)
+    }
+    if (c == 32) {
+        this->prviousValue = arc::Input::SPACE;
         return arc::Input::SPACE;
-    if (c == 49 || c == '&')
+    }
+    if (c == 49 || c == '&') {
+        this->prviousValue = arc::Input::StartSnake;
         return arc::Input::StartSnake;
-    if (c == 50 || c == 'é')
+    }
+    if (c == 50) {
+        this->prviousValue = arc::Input::StartSfox;
         return arc::Input::StartSfox;
-    if (c == 'g')
+    }
+    if (c == 'g') {
+        this->prviousValue = arc::Input::nextLib;
         return arc::Input::nextLib;
-    return arc::NONE;
+    }
+    return this->prviousValue;
 }
 
 bool ncurses::gameOver()

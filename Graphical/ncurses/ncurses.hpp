@@ -18,9 +18,6 @@ class ncurses : public arc::IDisplayModule
             static const std::string name = "ncurses";
             return name;
         };
-        void setCmd()
-        {
-        };
         int getCmd()
         {
             return this->cmd_;
@@ -34,7 +31,7 @@ class ncurses : public arc::IDisplayModule
         void stop() override;
 
         //DISPLAY//
-        void display_board(std::vector<std::string> board) override;
+        void display_board(board*) override;
         void display_text(std::string text, int x, int y) override;
 
         //EVENT//
@@ -45,7 +42,7 @@ class ncurses : public arc::IDisplayModule
         //WSIZE//
         int getSizeWindowX() override;
         int getSizeWindowY() override;
-    
+        arc::Input prviousValue;
     protected:
         bool is_Open;
         bool is_GameOver;

@@ -8,6 +8,7 @@
 #pragma once
 #include "../include/IGameModule.hpp"
 #include <vector>
+#include "../../board/board.hpp"
 #include "../../utils/utils.hpp"
 
 extern "C" {
@@ -20,7 +21,7 @@ extern "C" {
         public:
             solarFox() {};
             ~solarFox();
-            void init() override {
+            void init(board *board) override {
             };
             void stop() override {};
             const std::string& getName() const override {
@@ -28,5 +29,5 @@ extern "C" {
                 return name;
             };
             bool gameOver() override {return false;};
-            std::vector<std::string> update(arc::Input, std::vector<std::string>) override {};
+            void update(arc::Input, board*) override {};
     };
