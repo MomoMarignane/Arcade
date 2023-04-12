@@ -54,6 +54,7 @@ void arcade(char *src)
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_ncurses.so");
+                graph->init();
             } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
                 delete graph;
                 loaderGr.closeLoader();

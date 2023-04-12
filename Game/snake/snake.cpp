@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "snake.hpp"
+#include <unistd.h>
 
 void initSnake() __attribute__((constructor));
 void closeSnake() __attribute__((destructor));
@@ -102,15 +103,35 @@ void snake::deleteTail(board* board, int x, int y)
     while (!tail) {
         if (board->boardMap[x][y+1] == 'o' && l == 0) {
             r += 1;
+            u = 0, d = 0;
+            if (board->boardMap[x+1][y] == 'o' && l == 0)
+                d += 1;
+            if (board->boardMap[x-1][y] == 'o' && l == 0)
+                u += 1;
             y += 1;
         } else if (board->boardMap[x][y-1] == 'o' && r == 0) {
             l += 1;
+            u = 0, d = 0;
+            if (board->boardMap[x+1][y] == 'o' && l == 0)
+                d += 1;
+            if (board->boardMap[x-1][y] == 'o' && l == 0)
+                u += 1;
             y -= 1;
         } else if (board->boardMap[x+1][y] == 'o' && u == 0) {
             d += 1;
+            l = 0, r = 0;
+            if (board->boardMap[x][y+1] == 'o' && l == 0)
+                l += 1;
+            if (board->boardMap[x][y-1] == 'o' && l == 0)
+                r += 1;
             x += 1;
         } else if (board->boardMap[x-1][y] == 'o' && d == 0) {
             u += 1;
+            l = 0, r = 0;
+            if (board->boardMap[x][y+1] == 'o' && l == 0)
+                l += 1;
+            if (board->boardMap[x][y-1] == 'o' && l == 0)
+                r += 1;
             x -= 1;
         } else {
             tail = true;
@@ -126,6 +147,7 @@ void snake::collision()
 
 void snake::moveUp(board* board)
 {
+    bool deleteTail = true;
     for (int i = 0; i < board->boardMap.size(); i += 1)
         for (int j = 0; j < board->boardMap[i].size(); j += 1) {
             if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
@@ -133,17 +155,20 @@ void snake::moveUp(board* board)
                 this->yPos = j;
             }
         }
-    if (board->boardMap[this->xPos-1][this->yPos] == 'o') {
+    if (board->boardMap[this->xPos-1][this->yPos] == 'o' || board->boardMap[this->xPos-1][this->yPos] == '#') {
         this->collision();        
-    } else {
-        board->boardMap[this->xPos][this->yPos] = 'o';
-        board->boardMap[this->xPos-1][this->yPos] = 'O';
-        this->deleteTail(board, this->xPos, this->yPos);
+    } else if (board->boardMap[this->xPos-1][this->yPos] == '+' || board->boardMap[this->xPos-1][this->yPos] == '-' || board->boardMap[this->xPos-1][this->yPos] == '*') {
+            deleteTail = false;
     }
+    board->boardMap[this->xPos][this->yPos] = 'o';
+    board->boardMap[this->xPos-1][this->yPos] = 'O';
+    if (deleteTail)
+        this->deleteTail(board, this->xPos, this->yPos);
 }
 
 void snake::moveRight(board* board)
 {
+    bool deleteTail = true;
     for (int i = 0; i < board->boardMap.size(); i += 1)
         for (int j = 0; j < board->boardMap[i].size(); j += 1) {
             if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
@@ -151,17 +176,21 @@ void snake::moveRight(board* board)
                 this->yPos = j;
             }
         }
-    if (board->boardMap[this->xPos][this->yPos+1] == 'o') {
+    if (board->boardMap[this->xPos][this->yPos+1] == 'o' || board->boardMap[this->xPos][this->yPos+1] == '#') {
         this->collision();
     } else {
+        if (board->boardMap[this->xPos][this->yPos+1] == '+' || board->boardMap[this->xPos][this->yPos+1] == '-' || board->boardMap[this->xPos][this->yPos+1] == '*')
+            deleteTail = false;
         board->boardMap[this->xPos][this->yPos] = 'o';
         board->boardMap[this->xPos][this->yPos+1] = 'R';
-        this->deleteTail(board, this->xPos, this->yPos);
     }
+    if (deleteTail)
+        this->deleteTail(board, this->xPos, this->yPos);
 }
 
 void snake::moveLeft(board* board)
 {
+    bool deleteTail = true;
     for (int i = 0; i < board->boardMap.size(); i += 1)
         for (int j = 0; j < board->boardMap[i].size(); j += 1) {
             if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
@@ -169,17 +198,21 @@ void snake::moveLeft(board* board)
                 this->yPos = j;
             }
         }
-    if (board->boardMap[this->xPos][this->yPos-1] == 'o') {
+    if (board->boardMap[this->xPos][this->yPos-1] == 'o' || board->boardMap[this->xPos][this->yPos-1] == '#') {
         this->collision();
     } else {
+        if (board->boardMap[this->xPos][this->yPos-1] == '+' || board->boardMap[this->xPos][this->yPos-1] == '-' || board->boardMap[this->xPos][this->yPos-1] == '*')
+            deleteTail = false;
         board->boardMap[this->xPos][this->yPos] = 'o';
         board->boardMap[this->xPos][this->yPos-1] = 'L';
-        this->deleteTail(board, this->xPos, this->yPos);
     }
+    if (deleteTail)
+        this->deleteTail(board, this->xPos, this->yPos);
 }
 
 void snake::moveDown(board* board)
 {
+    bool deleteTail = true;
     for (int i = 0; i < board->boardMap.size(); i += 1)
         for (int j = 0; j < board->boardMap[i].size(); j += 1) {
             if (board->boardMap[i][j] == 'O' || board->boardMap[i][j] == 'R' || board->boardMap[i][j] == 'L' || board->boardMap[i][j] == 'D') {
@@ -187,17 +220,37 @@ void snake::moveDown(board* board)
                 this->yPos = j;
             }
         }
-    if (board->boardMap[this->xPos+1][this->yPos] == 'o') {
+    if (board->boardMap[this->xPos+1][this->yPos] == 'o' || board->boardMap[this->xPos+1][this->yPos] == '#') {
         this->collision();
     } else {
+        if (board->boardMap[this->xPos+1][this->yPos] == '+' || board->boardMap[this->xPos+1][this->yPos] == '-' || board->boardMap[this->xPos+1][this->yPos] == '*')
+            deleteTail = false;
         board->boardMap[this->xPos][this->yPos] = 'o';
         board->boardMap[this->xPos+1][this->yPos] = 'D';
-        this->deleteTail(board, this->xPos, this->yPos);
     }
+    if (deleteTail)
+        this->deleteTail(board, this->xPos, this->yPos);
 }
 
 void snake::update(arc::Input key, board* board)
 {
+    srand(time(NULL));
+    int Xrand = rand() % 19 + 2;
+    int Yrand = rand() % 19 + 2;
+    int timeRand = rand() % 6 + 1;
+    int foodRand = rand() % 3 + 1;
+    if (timeRand == 5 && board->boardMap[Xrand][Yrand] == ' ') {
+        switch (foodRand) {
+            case 1 : board->boardMap[Xrand][Yrand] = '+';
+                break;
+            case 2 : board->boardMap[Xrand][Yrand] = '-';
+                break;
+            case 3 : board->boardMap[Xrand][Yrand] = '*';
+                break;
+            default:
+                break;
+        }
+    }
     if (key == arc::Input::UP)
         this->moveUp(board);
     if (key == arc::Input::RIGHT)

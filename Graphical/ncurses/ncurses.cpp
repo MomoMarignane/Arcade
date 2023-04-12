@@ -148,18 +148,26 @@ arc::Input ncurses::handle_key()
     int c = getch();
     napms(150);
     if (c == KEY_UP) {
+        if (this->prviousValue == arc::Input::DOWN)
+            return arc::Input::DOWN;
         this->prviousValue = arc::Input::UP;
         return arc::Input::UP;
     }
     if (c == KEY_DOWN) {
+        if (this->prviousValue == arc::Input::UP)
+            return arc::Input::UP;
         this->prviousValue = arc::Input::DOWN;
         return arc::Input::DOWN;
     }
     if (c == KEY_LEFT) {
+        if (this->prviousValue == arc::Input::RIGHT)
+            return arc::Input::RIGHT;
         this->prviousValue = arc::Input::LEFT;
         return arc::Input::LEFT;
     }
     if (c == KEY_RIGHT) {
+        if (this->prviousValue == arc::Input::LEFT)
+            return arc::Input::LEFT;
         this->prviousValue = arc::Input::RIGHT;
         return arc::Input::RIGHT;
     }
