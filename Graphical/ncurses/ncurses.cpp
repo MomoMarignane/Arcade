@@ -146,7 +146,6 @@ void ncurses::display_text(std::string text, int x, int y)
 arc::Input ncurses::handle_key()
 {
     int c = getch();
-    napms(150);
     if (c == KEY_UP) {
         if (this->prviousValue == arc::Input::DOWN)
             return arc::Input::DOWN;

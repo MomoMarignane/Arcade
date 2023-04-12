@@ -5,9 +5,7 @@
 ** lib.c
 */
 
-#include <stdio.h>
 #include "snake.hpp"
-#include <unistd.h>
 
 void initSnake() __attribute__((constructor));
 void closeSnake() __attribute__((destructor));
@@ -32,34 +30,34 @@ extern "C" arc::IGameModule *entryPoint()
 void snake::char_to_object(board *board, char ptrChar, int x, int y)
 {
     if (ptrChar == 'O') {
-        board->_Object.push_back(arc::Obj("SnakeHeadUp", SnakeHeadUp, x, y));
+        board->_Object.push_back(arc::Obj("SnakeHeadUp", SnakeHeadUp, x + 480, y));
     }
     if (ptrChar == 'R') {
-        board->_Object.push_back(arc::Obj("SnakeHeadRight", SnakeHeadRight, x, y));
+        board->_Object.push_back(arc::Obj("SnakeHeadRight", SnakeHeadRight, x + 480, y));
     }
     if (ptrChar == 'L') {
-        board->_Object.push_back(arc::Obj("SnakeHeadLeft", SnakeHeadLeft, x, y));
+        board->_Object.push_back(arc::Obj("SnakeHeadLeft", SnakeHeadLeft, x + 480, y));
     }
     if (ptrChar == 'D') {
-        board->_Object.push_back(arc::Obj("SnakeHeadDown", SnakeHeadDown, x, y));
+        board->_Object.push_back(arc::Obj("SnakeHeadDown", SnakeHeadDown, x + 480, y));
     }
     if (ptrChar == 'o') {
-        board->_Object.push_back(arc::Obj("SnakeBody", SnakeBody, x, y));
+        board->_Object.push_back(arc::Obj("SnakeBody", SnakeBody, x + 480, y));
     }
     if (ptrChar == ' ') {
-        board->_Object.push_back(arc::Obj("SnakeBG", SnakeBG, x, y));
+        board->_Object.push_back(arc::Obj("SnakeBG", SnakeBG, x + 480, y));
     }
     if (ptrChar == '#') {
-        board->_Object.push_back(arc::Obj("SnakeWall", SnakeWall, x, y));
+        board->_Object.push_back(arc::Obj("SnakeWall", SnakeWall, x + 480, y));
     }
     if (ptrChar == '+') {
-        board->_Object.push_back(arc::Obj("SnakeFood1", SnakeFood1, x, y));
+        board->_Object.push_back(arc::Obj("SnakeFood1", SnakeFood1, x + 480, y));
     }
     if (ptrChar == '-') {
-        board->_Object.push_back(arc::Obj("SnakeFood2", SnakeFood2, x, y));
+        board->_Object.push_back(arc::Obj("SnakeFood2", SnakeFood2, x + 480, y));
     }
     if (ptrChar == '*') {
-        board->_Object.push_back(arc::Obj("SnakeFood3", SnakeFood3, x, y));
+        board->_Object.push_back(arc::Obj("SnakeFood3", SnakeFood3, x + 480, y));
     }
 
 }
@@ -234,6 +232,15 @@ void snake::moveDown(board* board)
 
 void snake::update(arc::Input key, board* board)
 {
+    std::clock_t startTime = std::clock();
+    double duration;
+    duration = (std::clock() - startTime) / (double) CLOCKS_PER_SEC;
+    if (duration < 0.15) {
+        std::clock_t sleep_time = (0.15 - duration) * CLOCKS_PER_SEC;
+        std::clock_t end_time = std::clock() + sleep_time;
+        while (std::clock() < end_time);
+    }
+    startTime = std::clock();
     srand(time(NULL));
     int Xrand = rand() % 19 + 2;
     int Yrand = rand() % 19 + 2;
@@ -256,9 +263,9 @@ void snake::update(arc::Input key, board* board)
     if (key == arc::Input::RIGHT)
         this->moveRight(board);
     if (key == arc::Input::DOWN)
-        moveDown(board);
+        this->moveDown(board);
     if (key == arc::Input::LEFT)
-        moveLeft(board);
+        this->moveLeft(board);
     board->_Object.clear();
 
     char ptrChar;

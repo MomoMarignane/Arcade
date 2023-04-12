@@ -30,7 +30,6 @@ void displayArcadeStart()
     std::cout << "          ➫ Project Leader / Architecture     : Mohamed Mansour" << std::endl;
     std::cout << "          ➬ Game designer / Graphics designer : Raphael de Monchy" << std::endl;
     std::cout << "          ➩ Game designer / Redaction         : Noah Yekken" << std::endl;
-
 }
 
 void arcade(char *src)
@@ -54,7 +53,6 @@ void arcade(char *src)
                 delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_ncurses.so");
-                graph->init();
             } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
                 delete graph;
                 loaderGr.closeLoader();
@@ -89,7 +87,6 @@ void arcade(char *src)
 
     
     while (!game->gameOver()) {
-        graph->display_board(&Board);
         g = graph->handle_key();
         if (g == arc::Input::nextLib) {
             if (myStrCmp(graph->getName(), "sdl2") == 0) {
@@ -111,6 +108,7 @@ void arcade(char *src)
         } else {
             game->update(g, &Board);
             graph->update();
+            graph->display_board(&Board);
         }
     }
 }

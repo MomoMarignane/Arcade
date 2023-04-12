@@ -41,9 +41,6 @@ sfml::sfml()
     this->_window.create(sf::VideoMode(1920, 1080), "My SFML Window", sf::Style::Resize | sf::Style::Close);
     this->_window.setFramerateLimit(60);
     this->_window.setKeyRepeatEnabled(true);
-    if (!this->_font.loadFromFile("stocky.ttf")) {
-        std::cerr << "Failed to load font" << std::endl;
-    }
     this->_score.setFont(this->_font);
     this->_score.setCharacterSize(30);
     this->_score.setFillColor(sf::Color::White);
@@ -81,26 +78,28 @@ void sfml::init()
     if (!this->_music.openFromFile("assets/arcadeZike.wav"))
         std::cerr << "fail sound " << std::endl;
 
-    this->_window.clear();
     this->_music.setVolume(100);
     // this->_music.setLoop(true);
-    this->_music.play();
 
-    // SET BG menu
-    this->_menuBgSprite.setTexture(this->_bgText);
-    this->_window.draw(this->_menuBgSprite);
+    // 
     sf::Vector2i vector = {sfml::getSizeWindowX(), sfml::getSizeWindowY()};
+    this->_menuBgSprite.setTexture(this->_bgText);
     this->_sprite.setTexture(this->_texture);
-    this->_sprite.setPosition(spritePosX, spritePosY);
-    this->_window.draw(this->_sprite);
-    //SET SNAKE BUTTON
     this->_SsnakeB.setTexture(this->_TSnakeB);
-    this->_SsnakeB.setPosition(690, 420);
-    this->_window.draw(this->_SsnakeB);
-    //SET SOLARFOX BUTTON
     this->_SsolarFoxB.setTexture(this->_TsolarFoxB);
-    this->_SsolarFoxB.setPosition(950, 420);
+    //
+    this->_sprite.setPosition(1920 / 4.5, -20);
+    this->_SsnakeB.setPosition(720, 430);
+    this->_SsolarFoxB.setPosition(990, 430);
+    // this->_menuBgSprite.setPosition(1920 / 2, 1080);
+    //
+
+    this->_window.clear();
+    this->_window.draw(this->_menuBgSprite);
+    this->_window.draw(this->_sprite);
+    this->_window.draw(this->_SsnakeB);
     this->_window.draw(this->_SsolarFoxB);
+    this->_music.play();
 }
 
 void sfml::update()
@@ -132,14 +131,16 @@ void sfml::display_object(arc::Obj Obj)
 
 void sfml::display_board(board *board)
 {
-    sf::Listener::setGlobalVolume(0);
     int pos_x = 0;
     int pos_y = 0;
     this->_window.clear();
+    // if (!this->_font.loadFromFile("stocky.ttf")) {
+    //     std::cerr << "Failed to load font" << std::endl;
+    // }
     //SCORE//
-    this->_score.setPosition(10, 10);
-    board->score = "1000";
-    this->_score.setString("Score :" + board->score);
+    // this->_score.setPosition(10, 10);
+    // board->score = "1000";
+    // this->_score.setString("Score :" + board->score);
     //    //
     for (size_t i = 0; i < board->_Object.size(); i++) {
         display_object(board->_Object[i]);

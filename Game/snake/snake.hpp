@@ -16,6 +16,7 @@ lib.hpp
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
 #include "../../board/board.hpp"
 #include "../include/IGameModule.hpp"
 #include "../../utils/utils.hpp"

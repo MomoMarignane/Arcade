@@ -9,7 +9,7 @@
 
 board::board()
 {
-    boardMap = std::vector<std::string>(20, std::string(20, ' '));
+    this->boardMap = std::vector<std::string>(20, std::string(20, ' '));
 }
 
 board::~board()
