@@ -50,7 +50,7 @@ sfml::sfml()
 
 sfml::~sfml()
 {
-    sf::Listener::setGlobalVolume(0);
+    // sf::Listener::setGlobalVolume(0);
     this->_music.stop();
     this->_window.close();
 }
@@ -75,10 +75,10 @@ void sfml::init()
         exit(84);
     }
 
-    if (!this->_music.openFromFile("assets/arcadeZike.wav"))
-        std::cerr << "fail sound " << std::endl;
+    // if (!this->_music.openFromFile("assets/arcadeZike.wav"))
+    //     std::cerr << "fail sound " << std::endl;
 
-    this->_music.setVolume(100);
+    // this->_music.setVolume(100);
     // this->_music.setLoop(true);
 
     // 
@@ -99,12 +99,12 @@ void sfml::init()
     this->_window.draw(this->_sprite);
     this->_window.draw(this->_SsnakeB);
     this->_window.draw(this->_SsolarFoxB);
-    this->_music.play();
+    // this->_music.play();
 }
 
 void sfml::update()
 {
-    this->_window.draw(this->_score);
+    // this->_window.draw(this->_score);
     this->_window.display();
 }
 
@@ -142,6 +142,7 @@ void sfml::display_board(board *board)
     // board->score = "1000";
     // this->_score.setString("Score :" + board->score);
     //    //
+    // board->_Object.clear();
     for (size_t i = 0; i < board->_Object.size(); i++) {
         display_object(board->_Object[i]);
     }
@@ -209,7 +210,7 @@ arc::Input sfml::handle_key()
 
 bool sfml::gameOver()
 {
-    return true;
+    exit(2);
 }
 
 bool sfml::isOpen()

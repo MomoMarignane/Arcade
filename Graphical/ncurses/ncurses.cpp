@@ -40,12 +40,13 @@ ncurses::ncurses()
     keypad(stdscr, true);
     this->is_Open = true;
     curs_set(0);
-    this->prviousValue = arc::Input::UP;
     init_color();
+    this->prviousValue = arc::Input::NONE;
 }
 
 ncurses::~ncurses()
 {
+    wclear(stdscr);
     endwin();
 }
 

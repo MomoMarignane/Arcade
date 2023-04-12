@@ -49,4 +49,9 @@ class sdl2 : public arc::IDisplayModule
         SDL_Surface* surfaceMessage_;
         SDL_Texture* message_;
         SDL_Rect rectMessage_;
+
+        //DISPLAY OBJECT //
+        SDL_Texture* Otexture_;
+        SDL_Surface* Osurface_;
+        SDL_Rect destRect_;
 };

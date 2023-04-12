@@ -105,6 +105,7 @@ void arcade(char *src)
                 Error::err_("Library not founding");
             }
             graph = loaderGr.getInstance();
+            graph->display_board(&Board);
         } else {
             game->update(g, &Board);
             graph->update();
