@@ -47,11 +47,17 @@ sfml::sfml()
     if (check_lib() > 0)
         std::cout << "Load SFML librairie : failed" << std::endl;
     this->prviousValue = arc::Input::NONE;
+    //
+    //
 }
 
 sfml::~sfml()
 {
     // sf::Listener::setGlobalVolume(0);
+    //
+    int i;
+    std::cout << "destructor sfml" <<  i++ <<std::endl;
+    //
     this->_music.stop();
     this->_window.close();
 }
@@ -143,10 +149,10 @@ void sfml::display_board(board *board)
     // board->score = "1000";
     // this->_score.setString("Score :" + board->score);
     //    //
-    // board->_Object.clear();
     for (size_t i = 0; i < board->_Object.size(); i++) {
         display_object(board->_Object[i]);
     }
+    // board->_Object.clear();
     // this->_window.display();
     // display_object(board->_Object[1]);
 }

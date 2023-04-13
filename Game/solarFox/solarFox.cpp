@@ -580,6 +580,23 @@ void solarFox::update(arc::Input key, board *board)
         this->moveRight(board);
     else if (key == arc::Input::SPACE)
         this->shoot(board);
+
+    board->_Object.clear();
+
+
+    char ptrChar;
+    int pos_x = 0;
+    int pos_y = 0;
+    
+    for (int i = 0; i < board->boardMap.size(); i++) {
+        pos_x = 0;
+        for (int j = 0; j < (board->boardMap[i].size() + 2); j++) {
+            ptrChar = board->boardMap[i][j];
+            char_to_object(board, ptrChar, pos_x, pos_y);
+            pos_x += 50;
+        }
+        pos_y += 50;
+    }
     
 }
 

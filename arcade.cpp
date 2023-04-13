@@ -91,17 +91,21 @@ void arcade(char *src)
             if (g == arc::Input::nextGame) {
                 if (myStrCmp(game->getName(), "Snake") == 0) {
                     loaderGa.closeLoader();
+                    // delete game;
                     loaderGa.openLoader("lib/arcade_solarfox.so");
                     game = loaderGa.getInstance();                   
                     Board.setBoardMap("Game/solarFox/map/solarFoxMap");
                     game->init(&Board);
+                    // graph->update();
                     g = arc::Input::NONE;
                 } else if (myStrCmp(game->getName(), "solarFox") == 0) {
                     loaderGa.closeLoader();
+                    // delete game;
                     loaderGa.openLoader("lib/arcade_snake.so");
                     game = loaderGa.getInstance();
                     Board.setBoardMap("Game/snake/map/snakeMap");
                     game->init(&Board);
+                    // graph->update();
                     g = arc::Input::NONE;
 
                 }
