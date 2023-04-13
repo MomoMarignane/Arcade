@@ -14,10 +14,7 @@ class ncurses : public arc::IDisplayModule
     public:
         ncurses();
         ~ncurses();
-        const std::string& getName() const override {
-            static const std::string name = "ncurses";
-            return name;
-        };
+        const std::string& getName() const override;
         int getCmd()
         {
             return this->cmd_;

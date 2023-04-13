@@ -58,10 +58,7 @@ const int WIDTH = 20;
             };
             virtual bool gameOver() override;
 
-            const std::string& getName() const override {
-                static const std::string name = "Snake";
-                return name;
-            };
+            const std::string& getName() const override;
             char direction; // la direction dans laquelle le serpent se déplace
             void grow() {};
             bool ate(std::vector<std::string> food) const {};
@@ -80,8 +77,6 @@ const int WIDTH = 20;
             void update(arc::Input, board*) override;
             void deleteTail(board*, int, int);
         // protected:
-            int _life;
-            int _score;
             int xPos;
             int yPos;
             bool gameOver_;

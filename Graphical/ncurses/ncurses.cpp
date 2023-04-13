@@ -53,6 +53,11 @@ ncurses::~ncurses()
 
 //INIT NCURSES ELEMENT //
 
+const std::string& ncurses::getName() const {
+            static const std::string name = "ncurses";
+            return name;
+}
+
 void ncurses::init_color()
 {
     if (!has_colors()) {
@@ -126,9 +131,14 @@ void ncurses::display_board(board* Game)
 {
     erase();
     for (int i = 0; i < Game->boardMap.size(); i += 1) {
-        for (int j = 0; j < Game->boardMap[j].size(); j += 1)
+        for (int j = 0; j < Game->boardMap[j].size(); j += 1) {
             if (Game->boardMap[i][j] == 'R' || Game->boardMap[i][j] == 'D' || Game->boardMap[i][j] == 'L')
                 Game->boardMap[i][j] = 'O';
+            if (Game->boardMap[i][j] == '1' || Game->boardMap[i][j] == '2')
+                Game->boardMap[i][j] = '|';
+            if (Game->boardMap[i][j] == '3' || Game->boardMap[i][j] == '4')
+                Game->boardMap[i][j] = '-';
+        }
     }
     for (int i = 0; const auto &j: Game->boardMap) {
         mvprintw(i, 30, j.c_str());
@@ -176,7 +186,6 @@ arc::Input ncurses::handle_key()
         return arc::Input::ENTER;
     }
     if (c == 32) {
-        this->prviousValue = arc::Input::SPACE;
         return arc::Input::SPACE;
     }
     if (c == 49 || c == '&') {
@@ -190,6 +199,10 @@ arc::Input ncurses::handle_key()
     if (c == 'g') {
         this->prviousValue = arc::Input::nextLib;
         return arc::Input::nextLib;
+    }
+    if (c == 115) {
+        this->prviousValue = arc::Input::NONE;
+        return arc::Input::nextGame;
     }
     return this->prviousValue;
 }

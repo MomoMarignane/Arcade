@@ -62,6 +62,12 @@ void snake::char_to_object(board *board, char ptrChar, int x, int y)
 
 }
 
+const std::string& snake::getName() const
+{
+    static const std::string name = "Snake";
+        return name;
+}
+
 void snake::init(board *board)
 {
     // RAPH //
@@ -80,13 +86,12 @@ void snake::init(board *board)
         pos_y += 50;
     }
     // - - - //
-    _life = 3;
-    _score = 0;
-    for (int i = 0; i < 5; i += 1)
-        _lifeMob.push_back(2);
-    xPos = 10;
-    yPos = 6;
-    // printf("initied\nSNAKE\n__\n");
+    for (int i = 0; i < board->boardMap.size(); i += 1) 
+        for (int j = 0; j < board->boardMap[i].size(); j += 1)
+            if (board->boardMap[i][j] == 'O') {
+                this->xPos = j;
+                this->yPos = i;
+            }
 }
 
 bool snake::gameOver()
