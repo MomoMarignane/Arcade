@@ -182,6 +182,11 @@ arc::Input sdl2::handle_key()
                     this->prviousValue = arc::Input::nextLib;
                     return arc::Input::nextLib;
                     break;
+                case SDLK_s:
+                    this->prviousValue = arc::Input::NONE;
+                    // this->prviousValue = arc::Input::nextGahme;
+                    return arc::Input::nextGame;
+                    break;
                 default:
                     return this->prviousValue;
                     break;

@@ -95,12 +95,15 @@ void arcade(char *src)
                     game = loaderGa.getInstance();                   
                     Board.setBoardMap("Game/solarFox/map/solarFoxMap");
                     game->init(&Board);
+                    g = arc::Input::NONE;
                 } else if (myStrCmp(game->getName(), "solarFox") == 0) {
                     loaderGa.closeLoader();
                     loaderGa.openLoader("lib/arcade_snake.so");
                     game = loaderGa.getInstance();
                     Board.setBoardMap("Game/snake/map/snakeMap");
                     game->init(&Board);
+                    g = arc::Input::NONE;
+
                 }
                 // game->update(g, &Board);
             } 
@@ -110,9 +113,11 @@ void arcade(char *src)
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_ncurses.so");
             } else if (myStrCmp(graph->getName(), "ncurses") == 0) {
+                delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_sfml.so");
             } else if (myStrCmp(graph->getName(), "sfml") == 0) {
+                delete graph;
                 loaderGr.closeLoader();
                 loaderGr.openLoader("lib/arcade_sdl2.so");
             } else {

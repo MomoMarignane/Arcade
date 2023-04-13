@@ -49,8 +49,86 @@ const std::string& solarFox::getName() const
                 return name;
 }
 
+void solarFox::char_to_object(board *board, char ptrChar, int x, int y)
+{
+    if (ptrChar == 'A') {
+        board->_Object.push_back(arc::Obj("SpaceShipUp", spaceShipUp, x + 480, y));
+    }
+    if (ptrChar == '>') {
+        board->_Object.push_back(arc::Obj("SpaceShipRight", spaceShipRight, x + 480, y));
+    }
+    if (ptrChar == '<') {
+        board->_Object.push_back(arc::Obj("SpaceShipLeft", spaceShipLeft, x + 480, y));
+    }
+    if (ptrChar == 'V') {
+        board->_Object.push_back(arc::Obj("SpaceShipDown", spaceShipDown, x + 480, y));
+    }
+
+    if (ptrChar == 'H') {
+        board->_Object.push_back(arc::Obj("SpaceTurretUp", spaceTurretUp, x + 480, y));
+    }
+    if (ptrChar == 'T') {
+        board->_Object.push_back(arc::Obj("SpaceTurretRight", spaceTurretRight, x + 480, y));
+    }
+    if (ptrChar == 'J') {
+        board->_Object.push_back(arc::Obj("SpaceTurretLeft", spaceTurretLeft, x + 480, y));
+    }
+    if (ptrChar == 'B') {
+        board->_Object.push_back(arc::Obj("SpaceTurretDown", spaceTurretDown, x + 480, y));
+    }
+
+    if (ptrChar == '2') {
+        board->_Object.push_back(arc::Obj("ammoUp", ammoUp, x + 480, y));
+    }
+    if (ptrChar == '3') {
+        board->_Object.push_back(arc::Obj("ammoRight", ammoRight, x + 480, y));
+    }
+    if (ptrChar == '4') {
+        board->_Object.push_back(arc::Obj("ammoLeft", ammoLeft, x + 480, y));
+    }
+    if (ptrChar == '1') {
+        board->_Object.push_back(arc::Obj("ammoDown", ammoDown, x + 480, y));
+    }
+
+    if (ptrChar == 'u') {
+        board->_Object.push_back(arc::Obj("ammoUp2", ammoUp2, x + 480, y));
+    }
+    if (ptrChar == 'l') {
+        board->_Object.push_back(arc::Obj("ammoRight2", ammoRight2, x + 480, y));
+    }
+    if (ptrChar == 'r') {
+        board->_Object.push_back(arc::Obj("ammoLeft2", ammoLeft2, x + 480, y));
+    }
+    if (ptrChar == 'd') {
+        board->_Object.push_back(arc::Obj("ammoDown2", ammoDown2, x + 480, y));
+    }
+
+    if (ptrChar == 'c') {
+        board->_Object.push_back(arc::Obj("coin", coin, x + 480, y));
+    }
+    if (ptrChar == '$') {
+        board->_Object.push_back(arc::Obj("ironWall", ironWall, x + 480, y));
+    }
+
+}
+
 void solarFox::init(board *board)
 {
+    char ptrChar;
+    int pos_x = 0;
+    int pos_y = 0;
+    
+    board->_Object.clear();
+    for (int i = 0; i < board->boardMap.size(); i++) {
+        pos_x = 0;
+        for (int j = 0; j < (board->boardMap[i].size() + 2); j++) {
+            ptrChar = board->boardMap[i][j];
+            char_to_object(board, ptrChar, pos_x, pos_y);
+            pos_x += 50;
+        }
+        pos_y += 50;
+    }
+    // - - - //
     for (int i = 0; i < board->boardMap.size(); i += 1) 
         for (int j = 0; j < board->boardMap[i].size(); j += 1)
             if (board->boardMap[i][j] == 'A') {

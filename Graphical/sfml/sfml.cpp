@@ -46,6 +46,7 @@ sfml::sfml()
     this->_score.setFillColor(sf::Color::White);
     if (check_lib() > 0)
         std::cout << "Load SFML librairie : failed" << std::endl;
+    this->prviousValue = arc::Input::NONE;
 }
 
 sfml::~sfml()
@@ -201,8 +202,12 @@ arc::Input sfml::handle_key()
                 return arc::Input::StartSfox;
             }
             if (this->_event.key.code == sf::Keyboard::G) {
-                this->prviousValue = arc::Input::nextLib;
+                this->prviousValue = arc::Input::NONE;
                 return arc::Input::nextLib;
+            }
+            if (this->_event.key.code == sf::Keyboard::S) {
+                this->prviousValue = arc::Input::NONE;
+                return arc::Input::nextGame;
             }
         }
     return this->prviousValue;
