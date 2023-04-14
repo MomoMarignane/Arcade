@@ -54,9 +54,7 @@ sfml::sfml()
 sfml::~sfml()
 {
     // sf::Listener::setGlobalVolume(0);
-    //
-    int i;
-    std::cout << "destructor sfml" <<  i++ <<std::endl;
+    //é
     //
     this->_music.stop();
     this->_window.close();
@@ -170,7 +168,7 @@ arc::Input sfml::handle_key()
     this->_window.display();
         while (this->_window.pollEvent(_event))
         {
-            sf::sleep(sf::milliseconds(150));
+            // sf::sleep(sf::milliseconds(150));
             if (_event.type == sf::Event::Closed) {
                 this->_window.close();
                 exit (0);

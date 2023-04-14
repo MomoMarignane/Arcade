@@ -54,7 +54,7 @@ sdl2::~sdl2()
     SDL_DestroyRenderer(this->renderer_);
     SDL_DestroyWindow(this->window_);
     Mix_FreeMusic(this->music_);//
-    SDL_DestroyTexture(this->Otexture_);
+    // SDL_DestroyTexture(this->Otexture_);
     Mix_CloseAudio();//
     SDL_Quit();
 }
@@ -93,6 +93,7 @@ void sdl2::update()
     // SDL_RenderClear(this->renderer_);
     // SDL_RenderCopy(this->renderer_, this->message_, NULL, &rectMessage_);
     // SDL_RenderCopy(this->renderer_, this->Otexture_, nullptr, &this->destRect_);
+    SDL_DestroyTexture(this->Otexture_);
     SDL_RenderPresent(this->renderer_);
 
 }
@@ -136,7 +137,7 @@ arc::Input sdl2::handle_key()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        SDL_Delay(150);
+        // SDL_Delay(150);
         if (event.type == SDL_QUIT)
         {
             exit(0);

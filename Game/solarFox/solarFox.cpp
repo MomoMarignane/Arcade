@@ -119,9 +119,9 @@ void solarFox::init(board *board)
     int pos_y = 0;
     
     board->_Object.clear();
-    for (int i = 0; i < board->boardMap.size(); i++) {
+    for (size_t i = 0; i < board->boardMap.size(); i++) {
         pos_x = 0;
-        for (int j = 0; j < (board->boardMap[i].size() + 2); j++) {
+        for (size_t j = 0; j < (board->boardMap[i].size() + 2); j++) {
             ptrChar = board->boardMap[i][j];
             char_to_object(board, ptrChar, pos_x, pos_y);
             pos_x += 50;
